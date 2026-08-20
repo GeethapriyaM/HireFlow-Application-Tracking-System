@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HireFlow - Recruitment</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>HireFlow</h1>
+        <p>Applicant tracking system</p>
+    </header>
+    <main>
+    <section>
+    <h2>Recruitment</h2>
+    <p>Manage candidates through the recruitment process.</p>
+    <div>
+        <input type="text" placeholder="Search Candidates">
+        <select>
+            <option value="">All Status</option>
+            <option value="screening">Screening</option>
+            <option value="interview">Interview</option>
+            <option value="selected">Selected</option>
+            <option value="rejected">Rejected</option>
+        </select>
+    </div><br><br>
+    <table>
+        <thead>
+            <tr>
+                <th>Candidate</th>
+                <th>Position</th>
+                <th>Experience</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td> Arun Kumar</td>
+                <td>Backend Developer</td>
+                <td>2 years</td>
+                <td>Screening</td>
+                <td><button data-action="view-detail" data-page="interview-detail.html">View</button></td>
+            </tr>
+            <tr>
+                <td>Priya Sharma</td>
+                <td>Data Scientist</td>
+                <td>1 year</td>
+                <td>Screening</td>
+                <td><button data-action="view-detail" data-page="interview-detail.html">View</button></td>
+            </tr>
+            <tr>
+                <td>Rahul Kumar</td>
+                <td>Frontend Developer</td>
+                <td>3 years</td>
+                <td>Screening</td>
+                <td><button data-action="view-detail" data-page="interview-detail.html">View</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+    <h3>Recruitment Actions</h3>
+    <button data-action="schedule-interview">Schedule Interview</button>
+    </div>
+    </section>
+    </main>
+     <script src="js/script.js"></script>
+</body>
+</html>
