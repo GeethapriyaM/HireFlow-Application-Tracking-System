@@ -23,6 +23,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     const saveRescheduleButton =
         document.getElementById("saveRescheduleButton");
 
+    const evaluationButton =
+           document.getElementById("evaluationButton");
+
 
     // =====================================================
     // LOAD INTERVIEW
@@ -80,10 +83,10 @@ document.addEventListener("DOMContentLoaded", async function () {
             candidate.name || "-";
 
         document.getElementById("candidateJobRole").textContent =
-            candidate.jobRole || "-";
+            candidate.position || "-";
 
         document.getElementById("candidateExperience").textContent =
-            `${candidate.experienceYears || 0} years`;
+            `${candidate.experience || 0} years`;
 
         document.getElementById("candidateEmail").textContent =
             candidate.email || "-";
@@ -94,7 +97,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 : "-";
 
         document.getElementById("candidateStage").textContent =
-            candidate.stage || "-";
+            candidate.status || "-";
 
 
         document.getElementById("interviewDate").textContent =
@@ -146,7 +149,19 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         }
     );
+   // =====================================================
+// EVALUATION BUTTON
+// =====================================================
 
+evaluationButton.addEventListener(
+    "click",
+    function () {
+
+        window.location.href =
+            `evaluation.html?id=${interviewId}`;
+
+    }
+);
 
     // =====================================================
     // CLOSE RESCHEDULE

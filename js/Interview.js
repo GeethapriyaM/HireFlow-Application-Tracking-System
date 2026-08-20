@@ -1,62 +1,97 @@
 document.addEventListener("DOMContentLoaded", async function () {
 
+    // ============================================================
+    // ELEMENTS
+    // ============================================================
+
     const upcomingTableBody =
         document.querySelector("#upcomingInterviews tbody");
 
     const completedTableBody =
         document.querySelector("#completedInterviews tbody");
 
+    const scheduleButton =
+        document.getElementById("scheduleInterviewButton");
+
+        
+
+
+    // ============================================================
+    // SCHEDULE INTERVIEW BUTTON
+    // ============================================================
+
+    if (scheduleButton) {
+
+        scheduleButton.addEventListener(
+            "click",
+            function () {
+
+                window.location.href =
+                    "schedule-interview.html";
+
+            }
+        );
+
+    }
+
+
+    // ============================================================
+    // CHECK INTERVIEW TABLE
+    // ============================================================
+
+    if (!upcomingTableBody || !completedTableBody) {
+        return;
+    }
+
+
+    // ============================================================
+    // LOAD INTERVIEWS
+    // ============================================================
 
     try {
 
-        const interviewResponse =
+        const response =
             await fetch(
                 "http://localhost:3000/api/interviews"
             );
 
 
-        if (!interviewResponse.ok) {
-            throw new Error("Failed to load interviews");
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to load interviews"
+            );
+
         }
 
 
         const interviews =
-            await interviewResponse.json();
+            await response.json();
 
 
-        const candidateResponse =
-            await fetch(
-                "http://localhost:3000/api/candidates"
-            );
-
-
-        if (!candidateResponse.ok) {
-            throw new Error("Failed to load candidates");
-        }
-
-
-        const candidates =
-            await candidateResponse.json();
-
+        // ========================================================
+        // CLEAR TABLES
+        // ========================================================
 
         upcomingTableBody.innerHTML = "";
         completedTableBody.innerHTML = "";
 
 
+        // ========================================================
+        // DISPLAY INTERVIEWS
+        // ========================================================
+
         interviews.forEach(function (interview) {
 
-            const candidateId =
-                typeof interview.candidateId === "object"
-                    ? interview.candidateId._id
-                    : interview.candidateId;
-
+            // ----------------------------------------------------
+            // GET CANDIDATE
+            // ----------------------------------------------------
 
             const candidate =
-                candidates.find(function (item) {
-
-                    return item._id === candidateId;
-
-                });
+                interview.candidateId &&
+                typeof interview.candidateId === "object"
+                    ? interview.candidateId
+                    : null;
 
 
             const candidateName =
@@ -70,6 +105,10 @@ document.addEventListener("DOMContentLoaded", async function () {
                     ? candidate.jobRole
                     : "-";
 
+
+            // ----------------------------------------------------
+            // DATE
+            // ----------------------------------------------------
 
             const interviewDate =
                 interview.interviewDate
@@ -86,6 +125,10 @@ document.addEventListener("DOMContentLoaded", async function () {
                     : "-";
 
 
+            // ----------------------------------------------------
+            // OTHER DETAILS
+            // ----------------------------------------------------
+
             const interviewTime =
                 interview.interviewTime || "-";
 
@@ -98,38 +141,106 @@ document.addEventListener("DOMContentLoaded", async function () {
                 interview.status || "-";
 
 
+            // ----------------------------------------------------
+            // CREATE ROW
+            // ----------------------------------------------------
+
             const row =
                 document.createElement("tr");
 
 
-            row.innerHTML = `
-                <td>${candidateName}</td>
-
-                <td>${jobRole}</td>
-
-                <td>${interviewDate}</td>
-
-                <td>${interviewTime}</td>
-
-                <td>${interviewType}</td>
-
-                <td>${status}</td>
-
-                <td>
-                    <button
-                        class="viewInterviewButton"
-                        data-interview-id="${interview._id}">
-                        View
-                    </button>
-                </td>
-            `;
-
+            // ====================================================
+            // COMPLETED TABLE
+            // ====================================================
 
             if (status === "Completed") {
 
+                row.innerHTML = `
+
+                    <td>
+                        ${candidateName}
+                    </td>
+
+                    <td>
+                        ${jobRole}
+                    </td>
+
+                    <td>
+                        ${interviewDate}
+                    </td>
+
+                    <td>
+                        ${interviewType}
+                    </td>
+
+                    <td>
+                        ${status}
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="viewInterviewButton"
+                            data-interview-id="${interview._id}"
+                        >
+                            View
+                        </button>
+
+                    </td>
+
+                `;
+
+
                 completedTableBody.appendChild(row);
 
-            } else {
+            }
+
+
+            // ====================================================
+            // UPCOMING TABLE
+            // ====================================================
+
+            else {
+
+                row.innerHTML = `
+
+                    <td>
+                        ${candidateName}
+                    </td>
+
+                    <td>
+                        ${jobRole}
+                    </td>
+
+                    <td>
+                        ${interviewDate}
+                    </td>
+
+                    <td>
+                        ${interviewTime}
+                    </td>
+
+                    <td>
+                        ${interviewType}
+                    </td>
+
+                    <td>
+                        ${status}
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="viewInterviewButton"
+                            data-interview-id="${interview._id}"
+                        >
+                            View
+                        </button>
+
+                    </td>
+
+                `;
+
 
                 upcomingTableBody.appendChild(row);
 
@@ -138,9 +249,9 @@ document.addEventListener("DOMContentLoaded", async function () {
         });
 
 
-        // =================================================
-        // VIEW BUTTON
-        // =================================================
+        // ========================================================
+        // VIEW BUTTONS
+        // ========================================================
 
         document
             .querySelectorAll(".viewInterviewButton")
@@ -152,6 +263,17 @@ document.addEventListener("DOMContentLoaded", async function () {
 
                         const interviewId =
                             button.dataset.interviewId;
+
+
+                        if (!interviewId) {
+
+                            alert(
+                                "Interview ID not found."
+                            );
+
+                            return;
+
+                        }
 
 
                         window.location.href =

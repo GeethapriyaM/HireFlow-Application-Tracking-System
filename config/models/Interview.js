@@ -2,11 +2,19 @@ const mongoose = require("mongoose");
 
 const interviewSchema = new mongoose.Schema(
     {
+        // ============================================================
+        // CANDIDATE
+        // ============================================================
+
         candidateId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Candidate",
             required: true
         },
+
+        // ============================================================
+        // INTERVIEW DETAILS
+        // ============================================================
 
         interviewDate: {
             type: Date,
@@ -15,7 +23,8 @@ const interviewSchema = new mongoose.Schema(
 
         interviewTime: {
             type: String,
-            required: true
+            required: true,
+            trim: true
         },
 
         interviewType: {
@@ -35,6 +44,10 @@ const interviewSchema = new mongoose.Schema(
             trim: true
         },
 
+        // ============================================================
+        // INTERVIEW STATUS
+        // ============================================================
+
         status: {
             type: String,
             enum: [
@@ -44,6 +57,30 @@ const interviewSchema = new mongoose.Schema(
                 "Rescheduled"
             ],
             default: "Scheduled"
+        },
+
+        // ============================================================
+        // EVALUATION
+        // ============================================================
+
+        evaluationScore: {
+            type: Number,
+            min: 0,
+            max: 100
+        },
+
+        evaluationFeedback: {
+            type: String,
+            trim: true,
+            default: ""
+        },
+
+        evaluationDecision: {
+            type: String,
+            enum: [
+                "selected",
+                "rejected"
+            ]
         }
     },
     {
@@ -51,7 +88,4 @@ const interviewSchema = new mongoose.Schema(
     }
 );
 
-module.exports = mongoose.model(
-    "Interview",
-    interviewSchema
-);
+module.exports = mongoose.model("Interview", interviewSchema);

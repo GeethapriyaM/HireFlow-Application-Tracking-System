@@ -14,47 +14,98 @@
 
     <link
         rel="stylesheet"
-        href="css/style.css"
+        href="css/interview.css"
     >
-
-    <script src="js/script.js"></script>
 
 </head>
 
 <body>
 
-    <header>
+    <!-- ================= HEADER ================= -->
 
-        <h1>HireFlow</h1>
+    <header class="top-header">
 
-        <p>Applicant tracking system</p>
+        <div class="brand">
+
+            <h1>HireFlow</h1>
+
+            <span>Applicant Tracking System</span>
+
+        </div>
+
+        <div class="header-badge">
+            Interview Management
+        </div>
 
     </header>
 
 
-    <main>
+    <!-- ================= MAIN ================= -->
 
-        <section>
+    <main class="page-container">
 
-            <h2>Interviews</h2>
+        <!-- PAGE HEADING -->
 
-            <p>
-                Manage and track candidate interviews.
-            </p>
-
-
-            <!-- =========================================
-                 UPCOMING INTERVIEWS
-            ========================================== -->
+        <div class="page-heading">
 
             <div>
 
-                <h3>Upcoming Interviews</h3>
+                <p class="eyebrow">
+                    INTERVIEW MANAGEMENT
+                </p>
 
-                <table
-                    id="upcomingInterviews"
-                    border="1"
-                >
+                <h2>
+                    Interviews
+                </h2>
+
+                <p class="subtitle">
+                    Manage and track candidate interviews,
+                    schedules, and interview status.
+                </p>
+
+            </div>
+
+
+            <button
+    type="button"
+    id="scheduleInterviewButton"
+    class="schedule-button"
+      >
+    + Schedule Interview
+</button>
+
+        </div>
+
+
+        <!-- ================= UPCOMING ================= -->
+
+        <section class="interview-section">
+
+            <div class="section-header">
+
+                <div>
+
+                    <h3>
+                        Upcoming Interviews
+                    </h3>
+
+                    <p>
+                        Interviews that are scheduled
+                        or currently in progress.
+                    </p>
+
+                </div>
+
+                <span class="section-badge upcoming-badge">
+                    Upcoming
+                </span>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table id="upcomingInterviews">
 
                     <thead>
 
@@ -85,19 +136,38 @@
 
             </div>
 
+        </section>
 
-            <!-- =========================================
-                 COMPLETED INTERVIEWS
-            ========================================== -->
 
-            <div>
+        <!-- ================= COMPLETED ================= -->
 
-                <h3>Completed Interviews</h3>
+        <section class="interview-section">
 
-                <table
-                    id="completedInterviews"
-                    border="1"
-                >
+            <div class="section-header">
+
+                <div>
+
+                    <h3>
+                        Completed Interviews
+                    </h3>
+
+                    <p>
+                        Interviews that have already
+                        been completed.
+                    </p>
+
+                </div>
+
+                <span class="section-badge completed-badge">
+                    Completed
+                </span>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table id="completedInterviews">
 
                     <thead>
 
@@ -126,28 +196,84 @@
 
             </div>
 
+        </section>
 
-            <!-- =========================================
-                 INTERVIEW ACTIONS
-            ========================================== -->
 
-            <div>
+        <!-- ================= QUICK INFO ================= -->
 
-                <h3>Interview Actions</h3>
+        <div class="info-row">
 
-                <button
-                    data-action="schedule-interview"
-                >
-                    Schedule Interview
-                </button>
+            <div class="info-card">
+
+                <div class="info-icon">
+                    📅
+                </div>
+
+                <div>
+
+                    <strong>
+                        Schedule
+                    </strong>
+
+                    <p>
+                        Arrange interviews for
+                        candidates.
+                    </p>
+
+                </div>
 
             </div>
 
 
-        </section>
+            <div class="info-card">
+
+                <div class="info-icon">
+                    👥
+                </div>
+
+                <div>
+
+                    <strong>
+                        Track Candidates
+                    </strong>
+
+                    <p>
+                        Monitor interview progress
+                        and status.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    ✓
+                </div>
+
+                <div>
+
+                    <strong>
+                        Manage Results
+                    </strong>
+
+                    <p>
+                        Review completed interviews
+                        and evaluations.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </main>
 
+
+    <!-- ================= JAVASCRIPT ================= -->
 
     <script src="js/interview.js"></script>
 

@@ -1,389 +1,152 @@
 const Candidate = require("../config/models/Candidate");
 
+// GET all candidates
+const getAllCandidates = async (req, res) => {
+  try {
+    const candidates = await Candidate.find().sort({ createdAt: -1 });
 
-// ==========================================
-// GET ALL CANDIDATES
-// ==========================================
+    res.status(200).json(candidates);
+  } catch (error) {
+    console.error("Get candidates error:", error);
 
-const getAllCandidate = async (req, res) => {
-    try {
-
-        const {
-            search,
-            jobRole,
-            stage,
-            skill,
-            minRating
-        } = req.query;
-
-        const filter = {};
-
-        if (search) {
-            filter.$or = [
-                {
-                    name: {
-                        $regex: search,
-                        $options: "i"
-                    }
-                },
-                {
-                    email: {
-                        $regex: search,
-                        $options: "i"
-                    }
-                },
-                {
-                    jobRole: {
-                        $regex: search,
-                        $options: "i"
-                    }
-                }
-            ];
-        }
-
-        if (jobRole) {
-            filter.jobRole = {
-                $regex: jobRole,
-                $options: "i"
-            };
-        }
-
-        if (stage) {
-            filter.stage = stage;
-        }
-
-        if (skill) {
-            filter.skills = {
-                $regex: skill,
-                $options: "i"
-            };
-        }
-
-        if (minRating) {
-            filter.rating = {
-                $gte: Number(minRating)
-            };
-        }
-
-        const candidates = await Candidate.find(filter)
-            .sort({ createdAt: -1 });
-
-        res.status(200).json(candidates);
-
-    } catch (error) {
-
-        res.status(500).json({
-            message: error.message
-        });
-
-    }
+    res.status(500).json({
+      message: "Failed to fetch candidates",
+      error: error.message
+    });
+  }
 };
 
-
-// ==========================================
-// GET CANDIDATE BY ID
-// ==========================================
-
+// GET candidate by ID
 const getCandidateById = async (req, res) => {
-    try {
+  try {
+    const candidate = await Candidate.findById(req.params.id);
 
-        const candidate =
-            await Candidate.findById(req.params.id);
-
-        if (!candidate) {
-            return res.status(404).json({
-                message: "Candidate not found"
-            });
-        }
-
-        res.status(200).json(candidate);
-
-    } catch (error) {
-
-        res.status(400).json({
-            message: "Invalid candidate ID"
-        });
-
+    if (!candidate) {
+      return res.status(404).json({
+        message: "Candidate not found"
+      });
     }
+
+    res.status(200).json(candidate);
+  } catch (error) {
+    console.error("Get candidate error:", error);
+
+    res.status(500).json({
+      message: "Failed to fetch candidate",
+      error: error.message
+    });
+  }
 };
 
-
-// ==========================================
-// CREATE CANDIDATE
-// ==========================================
-
+// CREATE candidate
 const createCandidate = async (req, res) => {
-    try {
+  try {
+    const {
+      name,
+      email,
+      phone,
+      position,
+      experience,
+      location,
+      skills,
+      status,
+      resume
+    } = req.body;
 
-        const candidate =
-            await Candidate.create(req.body);
-
-        res.status(201).json({
-            message: "Candidate created successfully",
-            candidate
-        });
-
-    } catch (error) {
-
-        res.status(400).json({
-            message: error.message
-        });
-
+    if (!name || !email || !phone || !position) {
+      return res.status(400).json({
+        message: "Name, email, phone and position are required"
+      });
     }
+
+    const candidate = new Candidate({
+      name,
+      email,
+      phone,
+      position,
+      experience,
+      location,
+      skills,
+      status,
+      resume
+    });
+
+    const savedCandidate = await candidate.save();
+
+    res.status(201).json({
+      message: "Candidate created successfully",
+      candidate: savedCandidate
+    });
+  } catch (error) {
+    console.error("Create candidate error:", error);
+
+    res.status(500).json({
+      message: "Failed to create candidate",
+      error: error.message
+    });
+  }
 };
 
-
-// ==========================================
-// UPDATE CANDIDATE
-// ==========================================
-
+// UPDATE candidate
 const updateCandidate = async (req, res) => {
-    try {
+  try {
+    const candidate = await Candidate.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+        runValidators: true
+      }
+    );
 
-        const candidate =
-            await Candidate.findByIdAndUpdate(
-                req.params.id,
-                req.body,
-                {
-                    new: true,
-                    runValidators: true
-                }
-            );
-
-        if (!candidate) {
-            return res.status(404).json({
-                message: "Candidate not found"
-            });
-        }
-
-        res.status(200).json({
-            message: "Candidate updated successfully",
-            candidate
-        });
-
-    } catch (error) {
-
-        res.status(400).json({
-            message: error.message
-        });
-
+    if (!candidate) {
+      return res.status(404).json({
+        message: "Candidate not found"
+      });
     }
+
+    res.status(200).json({
+      message: "Candidate updated successfully",
+      candidate
+    });
+  } catch (error) {
+    console.error("Update candidate error:", error);
+
+    res.status(500).json({
+      message: "Failed to update candidate",
+      error: error.message
+    });
+  }
 };
 
-
-// ==========================================
-// DELETE CANDIDATE
-// ==========================================
-
+// DELETE candidate
 const deleteCandidate = async (req, res) => {
-    try {
+  try {
+    const candidate = await Candidate.findByIdAndDelete(req.params.id);
 
-        const candidate =
-            await Candidate.findByIdAndDelete(
-                req.params.id
-            );
-
-        if (!candidate) {
-            return res.status(404).json({
-                message: "Candidate not found"
-            });
-        }
-
-        res.status(200).json({
-            message: "Candidate deleted successfully"
-        });
-
-    } catch (error) {
-
-        res.status(400).json({
-            message: "Invalid candidate ID"
-        });
-
+    if (!candidate) {
+      return res.status(404).json({
+        message: "Candidate not found"
+      });
     }
+
+    res.status(200).json({
+      message: "Candidate deleted successfully"
+    });
+  } catch (error) {
+    console.error("Delete candidate error:", error);
+
+    res.status(500).json({
+      message: "Failed to delete candidate",
+      error: error.message
+    });
+  }
 };
-
-
-// ==========================================
-// SEARCH CANDIDATES
-// ==========================================
-
-const searchCandidate = async (req, res) => {
-    try {
-
-        const {
-            name,
-            jobRole,
-            stage,
-            skill,
-            minRating
-        } = req.query;
-
-        const filter = {};
-
-        if (name) {
-            filter.name = {
-                $regex: name,
-                $options: "i"
-            };
-        }
-
-        if (jobRole) {
-            filter.jobRole = {
-                $regex: jobRole,
-                $options: "i"
-            };
-        }
-
-        if (stage) {
-            filter.stage = stage;
-        }
-
-        if (skill) {
-            filter.skills = {
-                $regex: skill,
-                $options: "i"
-            };
-        }
-
-        if (minRating) {
-            filter.rating = {
-                $gte: Number(minRating)
-            };
-        }
-
-        const candidates =
-            await Candidate.find(filter)
-                .sort({ createdAt: -1 });
-
-        res.status(200).json(candidates);
-
-    } catch (error) {
-
-        res.status(500).json({
-            message: error.message
-        });
-
-    }
-};
-
-
-// ==========================================
-// UPDATE ONE CANDIDATE STAGE
-// ==========================================
-
-const updateCandidateStage = async (req, res) => {
-    try {
-
-        const { stage } = req.body;
-
-        const validStages = [
-            "Applied",
-            "Screening",
-            "Interview",
-            "Selected",
-            "Rejected"
-        ];
-
-        if (!validStages.includes(stage)) {
-            return res.status(400).json({
-                message: "Invalid stage"
-            });
-        }
-
-        const candidate =
-            await Candidate.findByIdAndUpdate(
-                req.params.id,
-                { stage },
-                {
-                    new: true,
-                    runValidators: true
-                }
-            );
-
-        if (!candidate) {
-            return res.status(404).json({
-                message: "Candidate not found"
-            });
-        }
-
-        res.status(200).json({
-            message: "Candidate stage updated successfully",
-            candidate
-        });
-
-    } catch (error) {
-
-        res.status(400).json({
-            message: error.message
-        });
-
-    }
-};
-
-
-// ==========================================
-// BULK UPDATE STAGE
-// ==========================================
-
-const bulkUpdateStage = async (req, res) => {
-    try {
-
-        const { ids, stage } = req.body;
-
-        const validStages = [
-            "Applied",
-            "Screening",
-            "Interview",
-            "Selected",
-            "Rejected"
-        ];
-
-        if (!Array.isArray(ids) || ids.length === 0) {
-            return res.status(400).json({
-                message: "Candidate IDs are required"
-            });
-        }
-
-        if (!validStages.includes(stage)) {
-            return res.status(400).json({
-                message: "Invalid stage"
-            });
-        }
-
-        await Candidate.updateMany(
-            {
-                _id: {
-                    $in: ids
-                }
-            },
-            {
-                $set: {
-                    stage
-                }
-            }
-        );
-
-        res.status(200).json({
-            message: "Candidates updated successfully"
-        });
-
-    } catch (error) {
-
-        res.status(500).json({
-            message: error.message
-        });
-
-    }
-};
-
 
 module.exports = {
-    getAllCandidate,
-    getCandidateById,
-    createCandidate,
-    updateCandidate,
-    deleteCandidate,
-    searchCandidate,
-    updateCandidateStage,
-    bulkUpdateStage
+  getAllCandidates,
+  getCandidateById,
+  createCandidate,
+  updateCandidate,
+  deleteCandidate
 };

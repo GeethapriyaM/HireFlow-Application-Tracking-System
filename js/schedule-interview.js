@@ -2,6 +2,10 @@ document.addEventListener(
     "DOMContentLoaded",
     async function () {
 
+        // =====================================================
+        // ELEMENTS
+        // =====================================================
+
         const candidateSelect =
             document.getElementById("candidate");
 
@@ -9,6 +13,21 @@ document.addEventListener(
             document.getElementById(
                 "scheduleInterviewForm"
             );
+
+
+        // =====================================================
+        // CHECK ELEMENTS
+        // =====================================================
+
+        if (!candidateSelect || !form) {
+
+            console.error(
+                "Schedule interview form elements not found."
+            );
+
+            return;
+
+        }
 
 
         // =====================================================
@@ -23,17 +42,30 @@ document.addEventListener(
                 );
 
 
+            const result =
+                await response.json();
+
+
             if (!response.ok) {
 
                 throw new Error(
+                    result.message ||
                     "Failed to load candidates"
                 );
 
             }
 
 
-            const candidates =
-                await response.json();
+            const candidates = result;
+
+
+            // Clear existing options except first option
+
+            candidateSelect.innerHTML = `
+                <option value="">
+                    Select Candidate
+                </option>
+            `;
 
 
             candidates.forEach(
@@ -47,8 +79,11 @@ document.addEventListener(
                         candidate._id;
 
 
+                    // Candidate model uses "position",
+                    // not "jobRole"
+
                     option.textContent =
-                        `${candidate.name} - ${candidate.jobRole}`;
+                        `${candidate.name} - ${candidate.position || "-"}`;
 
 
                     candidateSelect.appendChild(
@@ -67,6 +102,7 @@ document.addEventListener(
             );
 
             alert(
+                error.message ||
                 "Unable to load candidates."
             );
 
@@ -83,6 +119,10 @@ document.addEventListener(
 
                 event.preventDefault();
 
+
+                // =================================================
+                // GET FORM VALUES
+                // =================================================
 
                 const candidateId =
                     candidateSelect.value;
@@ -108,22 +148,68 @@ document.addEventListener(
                     ).value.trim();
 
 
-                if (
-                    !candidateId ||
-                    !interviewDate ||
-                    !interviewTime ||
-                    !interviewType ||
-                    !interviewer
-                ) {
+                // =================================================
+                // VALIDATION
+                // =================================================
+
+                if (!candidateId) {
 
                     alert(
-                        "Please fill all fields."
+                        "Please select a candidate."
                     );
 
                     return;
 
                 }
 
+
+                if (!interviewDate) {
+
+                    alert(
+                        "Please select an interview date."
+                    );
+
+                    return;
+
+                }
+
+
+                if (!interviewTime) {
+
+                    alert(
+                        "Please select an interview time."
+                    );
+
+                    return;
+
+                }
+
+
+                if (!interviewType) {
+
+                    alert(
+                        "Please select an interview type."
+                    );
+
+                    return;
+
+                }
+
+
+                if (!interviewer) {
+
+                    alert(
+                        "Please enter the interviewer name."
+                    );
+
+                    return;
+
+                }
+
+
+                // =================================================
+                // SEND REQUEST
+                // =================================================
 
                 try {
 
@@ -160,6 +246,16 @@ document.addEventListener(
                         await response.json();
 
 
+                    console.log(
+                        "Schedule Interview Response:",
+                        result
+                    );
+
+
+                    // =================================================
+                    // ERROR
+                    // =================================================
+
                     if (!response.ok) {
 
                         throw new Error(
@@ -170,16 +266,35 @@ document.addEventListener(
                     }
 
 
+                    // =================================================
+                    // SUCCESS
+                    // =================================================
+
                     alert(
                         "Interview scheduled successfully!"
                     );
 
 
                     // IMPORTANT:
-                    // Send INTERVIEW ID, not candidate ID
+                    // Use INTERVIEW ID here,
+                    // NOT candidate ID.
 
-                    window.location.href =
-                        `interview-details.html?id=${result.interview._id}`;
+                    if (
+                        result.interview &&
+                        result.interview._id
+                    ) {
+
+                        window.location.href =
+                            `interview-details.html?id=${result.interview._id}`;
+
+                    } else {
+
+                        // Fallback
+
+                        window.location.href =
+                            "interviews.html";
+
+                    }
 
 
                 } catch (error) {
@@ -190,7 +305,8 @@ document.addEventListener(
                     );
 
                     alert(
-                        error.message
+                        error.message ||
+                        "Failed to schedule interview."
                     );
 
                 }

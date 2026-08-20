@@ -6,44 +6,56 @@ const {
     createInterview,
     getAllInterviews,
     getInterviewById,
+    getInterviewsByCandidate,
     updateInterview,
     cancelInterview
 } = require("../controllers/InterviewController");
 
 
-// Schedule Interview
-router.post(
-    "/",
-    createInterview
-);
+// ============================================================
+// CREATE / SCHEDULE INTERVIEW
+// ============================================================
+
+router.post("/", createInterview);
 
 
-// Get all Interviews
+// ============================================================
+// GET ALL INTERVIEWS
+// ============================================================
+
+router.get("/", getAllInterviews);
+
+
+// ============================================================
+// GET INTERVIEWS BY CANDIDATE
+// IMPORTANT: Keep this BEFORE /:id
+// ============================================================
+
 router.get(
-    "/",
-    getAllInterviews
+    "/candidate/:candidateId",
+    getInterviewsByCandidate
 );
 
 
-// Get Interview by ID
-router.get(
-    "/:id",
-    getInterviewById
-);
+// ============================================================
+// GET INTERVIEW BY ID
+// ============================================================
+
+router.get("/:id", getInterviewById);
 
 
-// Update / Reschedule Interview
-router.put(
-    "/:id",
-    updateInterview
-);
+// ============================================================
+// UPDATE / RESCHEDULE / EVALUATE
+// ============================================================
+
+router.put("/:id", updateInterview);
 
 
-// Cancel Interview
-router.patch(
-    "/:id/cancel",
-    cancelInterview
-);
+// ============================================================
+// CANCEL INTERVIEW
+// ============================================================
+
+router.patch("/:id/cancel", cancelInterview);
 
 
 module.exports = router;

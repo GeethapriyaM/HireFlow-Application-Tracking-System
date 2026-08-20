@@ -10,175 +10,400 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>HireFlow - Interview Detail</title>
+    <title>HireFlow - Interview Details</title>
 
     <link
         rel="stylesheet"
-        href="css/style.css"
+        href="css/interview-details.css"
     >
 
 </head>
 
 <body>
 
-    <header>
+    <!-- ================= HEADER ================= -->
 
-        <h1>HireFlow</h1>
+    <header class="top-header">
 
-        <p>Applicant tracking system</p>
+        <div class="brand">
+
+            <h1>HireFlow</h1>
+
+            <span>Applicant Tracking System</span>
+
+        </div>
+
+        <div class="header-badge">
+            Interview Details
+        </div>
 
     </header>
 
 
-    <main>
+    <!-- ================= MAIN ================= -->
 
-        <section>
+    <main class="page-container">
 
-            <h2>Interview Details</h2>
+        <!-- PAGE HEADER -->
 
-            <p>
-                View interview information for the selected candidate.
-            </p>
-
-
-            <!-- Candidate Information -->
+        <div class="page-heading">
 
             <div>
 
-                <h3>Candidate Information</h3>
-
-                <p>
-                    <strong>Name:</strong>
-                    <span id="candidateName">Loading...</span>
+                <p class="eyebrow">
+                    INTERVIEW MANAGEMENT
                 </p>
 
-                <p>
-                    <strong>Position:</strong>
-                    <span id="candidateJobRole">Loading...</span>
-                </p>
+                <h2>
+                    Interview Details
+                </h2>
 
-                <p>
-                    <strong>Experience:</strong>
-                    <span id="candidateExperience">Loading...</span>
-                </p>
-
-                <p>
-                    <strong>Email:</strong>
-                    <span id="candidateEmail">Loading...</span>
-                </p>
-
-                <p>
-                    <strong>Skills:</strong>
-                    <span id="candidateSkills">Loading...</span>
-                </p>
-
-                <p>
-                    <strong>Current Stage:</strong>
-                    <span id="candidateStage">Loading...</span>
+                <p class="subtitle">
+                    View candidate information, interview
+                    schedule, and manage interview actions.
                 </p>
 
             </div>
 
+        </div>
 
-            <!-- Interview Information -->
 
-            <div>
+        <!-- ================= CANDIDATE CARD ================= -->
 
-                <h3>Interview Information</h3>
+        <section class="details-card">
 
-                <p>
-                    <strong>Interview Date:</strong>
-                    <span id="interviewDate">
-                        Not scheduled
+            <div class="card-header">
+
+                <div>
+
+                    <span class="card-label">
+                        CANDIDATE
                     </span>
-                </p>
 
-                <p>
-                    <strong>Interview Time:</strong>
-                    <span id="interviewTime">
-                        Not scheduled
+                    <h3>
+                        Candidate Information
+                    </h3>
+
+                </div>
+
+                <div class="candidate-icon">
+                    👤
+                </div>
+
+            </div>
+
+
+            <div class="candidate-grid">
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Name
                     </span>
-                </p>
 
-                <p>
-                    <strong>Interview Type:</strong>
-                    <span id="interviewType">
-                        Not scheduled
+                    <strong id="candidateName">
+                        Loading...
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Position
                     </span>
-                </p>
 
-                <p>
-                    <strong>Interviewer:</strong>
-                    <span id="interviewer">
+                    <strong id="candidateJobRole">
+                        Loading...
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Experience
+                    </span>
+
+                    <strong id="candidateExperience">
+                        Loading...
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Email
+                    </span>
+
+                    <strong id="candidateEmail">
+                        Loading...
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item full-width">
+
+                    <span class="info-label">
+                        Skills
+                    </span>
+
+                    <strong id="candidateSkills">
+                        Loading...
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Current Stage
+                    </span>
+
+                    <strong id="candidateStage">
+                        Loading...
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= INTERVIEW CARD ================= -->
+
+        <section class="details-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <span class="card-label">
+                        SCHEDULE
+                    </span>
+
+                    <h3>
+                        Interview Information
+                    </h3>
+
+                </div>
+
+                <div class="calendar-icon">
+                    📅
+                </div>
+
+            </div>
+
+
+            <div class="interview-grid">
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Interview Date
+                    </span>
+
+                    <strong id="interviewDate">
+                        Not scheduled
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Interview Time
+                    </span>
+
+                    <strong id="interviewTime">
+                        Not scheduled
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Interview Type
+                    </span>
+
+                    <strong id="interviewType">
+                        Not scheduled
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Interviewer
+                    </span>
+
+                    <strong id="interviewer">
                         Not assigned
-                    </span>
-                </p>
+                    </strong>
 
-                <p>
-                    <strong>Status:</strong>
-                    <span id="interviewStatus">
+                </div>
+
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Status
+                    </span>
+
+                    <span
+                        id="interviewStatus"
+                        class="status-badge"
+                    >
                         Not scheduled
                     </span>
-                </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= ACTION CARD ================= -->
+
+        <section class="action-card">
+
+            <div class="action-content">
+
+                <div>
+
+                    <span class="card-label">
+                        ACTIONS
+                    </span>
+
+                    <h3>
+                        Manage Interview
+                    </h3>
+
+                    <p>
+                        You can reschedule or cancel this
+                        interview using the actions below.
+                    </p>
+
+                </div>
+
+
+                <div class="action-buttons">
+
+                    <button
+                        id="rescheduleButton"
+                        class="reschedule-button"
+                    >
+                        Reschedule Interview
+                    </button>
+
+
+                    <button
+                        id="cancelButton"
+                        class="cancel-button"
+                    >
+                        Cancel Interview
+                    </button>
+                    <button
+                        id="evaluationButton"
+                         class="evaluation-button"
+                       >
+                          Evaluate Candidate
+                     </button>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= RESCHEDULE FORM ================= -->
+
+        <section
+            id="rescheduleForm"
+            class="reschedule-card"
+            style="display: none;"
+        >
+
+            <div class="card-header">
+
+                <div>
+
+                    <span class="card-label">
+                        UPDATE SCHEDULE
+                    </span>
+
+                    <h3>
+                        Reschedule Interview
+                    </h3>
+
+                </div>
+
+                <div class="calendar-icon">
+                    🔄
+                </div>
 
             </div>
 
 
-            <!-- Interview Actions -->
+            <div class="form-grid">
 
-            <div>
+                <div class="form-group">
 
-                <h3>Interview Action</h3>
+                    <label for="newInterviewDate">
+                        New Interview Date
+                    </label>
 
-                <button id="rescheduleButton">
-                    Reschedule Interview
-                </button>
+                    <input
+                        type="date"
+                        id="newInterviewDate"
+                    >
 
-                <button id="cancelButton">
-                    Cancel Interview
-                </button>
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="newInterviewTime">
+                        New Interview Time
+                    </label>
+
+                    <input
+                        type="time"
+                        id="newInterviewTime"
+                    >
+
+                </div>
 
             </div>
 
 
-            <!-- Reschedule Form -->
+            <div class="reschedule-actions">
 
-            <div
-                id="rescheduleForm"
-                style="display: none;"
-            >
-
-                <h3>Reschedule Interview</h3>
-
-                <label for="newInterviewDate">
-                    New Interview Date:
-                </label>
-
-                <input
-                    type="date"
-                    id="newInterviewDate"
+                <button
+                    id="saveRescheduleButton"
+                    class="save-button"
                 >
-
-                <br><br>
-
-
-                <label for="newInterviewTime">
-                    New Interview Time:
-                </label>
-
-                <input
-                    type="time"
-                    id="newInterviewTime"
-                >
-
-                <br><br>
-
-
-                <button id="saveRescheduleButton">
                     Save Reschedule
                 </button>
 
-                <button id="closeRescheduleButton">
+
+                <button
+                    id="closeRescheduleButton"
+                    class="close-button"
+                >
                     Close
                 </button>
 
@@ -186,8 +411,24 @@
 
         </section>
 
+
+        <!-- ================= FOOTER NOTE ================= -->
+
+        <div class="page-note">
+
+            <span>💡</span>
+
+            <p>
+                Changes made here are automatically updated
+                in the interview schedule.
+            </p>
+
+        </div>
+
     </main>
 
+
+    <!-- ================= JAVASCRIPT ================= -->
 
     <script src="js/interview-details.js"></script>
 
