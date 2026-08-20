@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>HireFlow - Candidate Evaluation</title>
+
+    <link
+        rel="stylesheet"
+        href="css/evaluation.css"
+    >
+
+</head>
+
+
+<body>
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+
+    <header class="header">
+
+        <div class="header-content">
+
+            <div>
+
+                <h1>HireFlow</h1>
+
+                <p>
+                    Applicant Tracking System
+                </p>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================
+         MAIN
+    ========================================== -->
+
+    <main class="main-container">
+
+        <!-- PAGE HEADER -->
+
+        <div class="page-header">
+
+            <div>
+
+                <h2>
+                    Candidate Evaluation
+                </h2>
+
+                <p>
+                    Evaluate the candidate after the interview.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             CANDIDATE INFORMATION CARD
+        ========================================== -->
+
+        <section class="card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <h3>
+                        Candidate Information
+                    </h3>
+
+                    <p>
+                        Interview candidate details
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="candidate-grid">
+
+                <!-- Candidate Name -->
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Candidate Name
+                    </span>
+
+                    <span
+                        class="info-value"
+                        id="candidateName"
+                    >
+                        Loading...
+                    </span>
+
+                </div>
+
+
+                <!-- Position -->
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Position
+                    </span>
+
+                    <span
+                        class="info-value"
+                        id="candidateJobRole"
+                    >
+                        Loading...
+                    </span>
+
+                </div>
+
+
+                <!-- Interview Type -->
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Interview Type
+                    </span>
+
+                    <span
+                        class="info-value"
+                        id="interviewType"
+                    >
+                        Loading...
+                    </span>
+
+                </div>
+
+
+                <!-- Interviewer -->
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Interviewer
+                    </span>
+
+                    <span
+                        class="info-value"
+                        id="interviewer"
+                    >
+                        Loading...
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             EVALUATION CARD
+        ========================================== -->
+
+        <section class="card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <h3>
+                        Evaluation
+                    </h3>
+
+                    <p>
+                        Provide your assessment of the candidate.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="evaluation-form">
+
+
+                <!-- SCORE -->
+
+                <div class="form-group">
+
+                    <label for="score">
+
+                        Score
+
+                        <span class="required">
+                            *
+                        </span>
+
+                    </label>
+
+
+                    <div class="score-wrapper">
+
+                        <input
+                            type="number"
+                            id="score"
+                            min="0"
+                            max="100"
+                            placeholder="Enter score"
+                        >
+
+                        <span class="score-label">
+                            / 100
+                        </span>
+
+                    </div>
+
+
+                    <small>
+                        Enter a score between 0 and 100.
+                    </small>
+
+                </div>
+
+
+                <!-- FEEDBACK -->
+
+                <div class="form-group">
+
+                    <label for="feedback">
+
+                        Feedback
+
+                        <span class="required">
+                            *
+                        </span>
+
+                    </label>
+
+
+                    <textarea
+                        id="feedback"
+                        rows="6"
+                        placeholder="Enter your feedback about the candidate..."
+                    ></textarea>
+
+
+                    <small>
+                        Provide clear feedback about the candidate's performance.
+                    </small>
+
+                </div>
+
+
+                <!-- DECISION -->
+
+                <div class="form-group">
+
+                    <label for="decision">
+
+                        Final Decision
+
+                        <span class="required">
+                            *
+                        </span>
+
+                    </label>
+
+
+                    <select id="decision">
+
+                        <option value="">
+                            Select Decision
+                        </option>
+
+                        <option value="selected">
+                            Selected
+                        </option>
+
+                        <option value="rejected">
+                            Rejected
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             ACTION CARD
+        ========================================== -->
+
+        <section class="action-section">
+
+            <button
+                type="button"
+                id="submitEvaluationButton"
+                class="submit-button"
+            >
+
+                Submit Evaluation
+
+            </button>
+
+        </section>
+
+
+        <!-- =========================================
+             MESSAGE
+        ========================================== -->
+
+        <div
+            id="evaluationMessage"
+            class="message"
+            style="display: none;"
+        ></div>
+
+
+    </main>
+
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
+
+    <script src="js/evaluation.js"></script>
+
+</body>
+
+</html>

@@ -1,49 +1,22 @@
 const express = require("express");
 
-const {
-    getAllCandidate,
-    getCandidateById,
-    createCandidate,
-    updateCandidate,
-    deleteCandidate,
-    searchCandidate,
-    updateCandidateStage,
-    bulkUpdateStage
-} = require("../Controllers/candidateController");
-
 const router = express.Router();
 
+const candidateController = require("../controllers/candidateController");
 
-// GET ALL
-router.get("/", getAllCandidate);
+// GET all candidates
+router.get("/", candidateController.getAllCandidates);
 
+// GET candidate by ID
+router.get("/:id", candidateController.getCandidateById);
 
-// SEARCH
-router.get("/search", searchCandidate);
+// CREATE candidate
+router.post("/", candidateController.createCandidate);
 
+// UPDATE candidate
+router.put("/:id", candidateController.updateCandidate);
 
-// BULK STAGE UPDATE
-router.patch("/bulk/stage", bulkUpdateStage);
-
-
-// GET BY ID
-router.get("/:id", getCandidateById);
-
-
-// CREATE
-router.post("/", createCandidate);
-
-
-// UPDATE
-router.put("/:id", updateCandidate);
-
-
-// UPDATE STAGE
-router.patch("/:id/stage", updateCandidateStage);
-
-
-// DELETE
-router.delete("/:id", deleteCandidate);
-
+// DELETE candidate
+router.delete("/:id", candidateController.deleteCandidate);
 
 module.exports = router;

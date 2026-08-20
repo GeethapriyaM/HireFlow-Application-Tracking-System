@@ -1,110 +1,24 @@
-const API_URL =
-    "http://localhost:3000/api/candidates";
-
-
-// ==========================================
-// ELEMENTS
-// ==========================================
-
-const tbody =
-    document.getElementById(
-        "candidatesTableBody"
-    );
-
-const candidateCount =
-    document.getElementById(
-        "candidateCount"
-    );
-
-const searchInput =
-    document.getElementById(
-        "searchInput"
-    );
-
-const jobRoleFilter =
-    document.getElementById(
-        "jobRoleFilter"
-    );
-
-const stageFilter =
-    document.getElementById(
-        "stageFilter"
-    );
-
-const skillFilter =
-    document.getElementById(
-        "skillFilter"
-    );
-
-const ratingFilter =
-    document.getElementById(
-        "ratingFilter"
-    );
-
-const selectAll =
-    document.getElementById(
-        "selectAllCandidates"
-    );
-
-const bulkStageSelect =
-    document.getElementById(
-        "bulkStageSelect"
-    );
-
-const bulkStageBtn =
-    document.getElementById(
-        "bulkStageBtn"
-    );
-
-const addCandidateBtn =
-    document.getElementById(
-        "addCandidateBtn"
-    );
-
-const candidateModal =
-    document.getElementById(
-        "candidateModal"
-    );
-
-const profileModal =
-    document.getElementById(
-        "profileModal"
-    );
-
-const editCandidateModal =
-    document.getElementById(
-        "editCandidateModal"
-    );
-
-const closeModal =
-    document.getElementById(
-        "closeModal"
-    );
-
-const closeProfile =
-    document.getElementById(
-        "closeProfile"
-    );
-
-const closeEditModal =
-    document.getElementById(
-        "closeEditModal"
-    );
-
-const candidateForm =
-    document.getElementById(
-        "candidateForm"
-    );
-
-const editCandidateForm =
-    document.getElementById(
-        "editCandidateForm"
-    );
-
+const API_URL = "http://localhost:3000/api/candidates";
 
 let candidates = [];
 
-let selectedIds = new Set();
+
+// ==========================================
+// DOM ELEMENTS
+// ==========================================
+
+const tableBody = document.getElementById("candidateTableBody");
+const loadingState = document.getElementById("loadingState");
+const emptyState = document.getElementById("emptyState");
+
+const searchInput = document.getElementById("searchInput");
+const statusFilter = document.getElementById("statusFilter");
+const positionFilter = document.getElementById("positionFilter");
+const sortFilter = document.getElementById("sortFilter");
+
+const candidateModal = document.getElementById("candidateModal");
+const detailsModal = document.getElementById("detailsModal");
+const candidateForm = document.getElementById("candidateForm");
 
 
 // ==========================================
@@ -113,1279 +27,641 @@ let selectedIds = new Set();
 
 async function loadCandidates() {
 
+    showLoading();
+
     try {
 
-        const params =
-            new URLSearchParams();
-
-
-        const search =
-            searchInput.value.trim();
-
-        const jobRole =
-            jobRoleFilter.value.trim();
-
-        const stage =
-            stageFilter.value;
-
-        const skill =
-            skillFilter.value.trim();
-
-        const rating =
-            ratingFilter.value;
-
-
-        if (search) {
-
-            params.append(
-                "search",
-                search
-            );
-
-        }
-
-
-        if (jobRole) {
-
-            params.append(
-                "jobRole",
-                jobRole
-            );
-
-        }
-
-
-        if (stage) {
-
-            params.append(
-                "stage",
-                stage
-            );
-
-        }
-
-
-        if (skill) {
-
-            params.append(
-                "skill",
-                skill
-            );
-
-        }
-
-
-        if (rating !== "0") {
-
-            params.append(
-                "minRating",
-                rating
-            );
-
-        }
-
-
-        let url = API_URL;
-
-
-        if (params.toString()) {
-
-            url +=
-                `?${params.toString()}`;
-
-        }
-
-
-        const response =
-            await fetch(url);
-
-
-        const result =
-            await response.json();
-
+        const response = await fetch(API_URL);
 
         if (!response.ok) {
-
-            throw new Error(
-                result.message ||
-                "Failed to load candidates"
-            );
-
+            throw new Error("Failed to fetch candidates");
         }
 
+        candidates = await response.json();
 
-        candidates =
-            Array.isArray(result)
-                ? result
-                : result.data || [];
+        console.log("Candidates loaded:", candidates);
 
-
-        displayCandidates(
-            candidates
-        );
-
+        updateStatistics();
+        populatePositionFilter();
+        renderCandidates();
 
     } catch (error) {
 
-        console.error(error);
+        console.error("Candidate loading error:", error);
 
+        tableBody.innerHTML = "";
 
-        tbody.innerHTML = `
-            <tr>
-                <td
-                    colspan="7"
-                    style="text-align:center;padding:40px;"
-                >
-                    Unable to load candidates.
-                </td>
-            </tr>
-        `;
+        emptyState.classList.remove("hidden");
 
+        emptyState.querySelector("h3").textContent =
+            "Unable to load candidates";
+
+        emptyState.querySelector("p").textContent =
+            "Please check whether HireFlow server is running.";
+
+        showToast("Unable to load candidates");
+
+    } finally {
+
+        loadingState.classList.add("hidden");
     }
 }
 
 
 // ==========================================
-// DISPLAY CANDIDATES
+// GET POSITION
 // ==========================================
 
-function displayCandidates(list) {
+function getPosition(candidate) {
 
-    tbody.innerHTML = "";
-
-    candidateCount.textContent =
-        list.length;
-
-    selectedIds.clear();
-
-    selectAll.checked = false;
+    return (
+        candidate.position ||
+        candidate.jobRole ||
+        "-"
+    );
+}
 
 
-    if (list.length === 0) {
+// ==========================================
+// GET EXPERIENCE
+// ==========================================
 
-        tbody.innerHTML = `
-            <tr>
-                <td
-                    colspan="7"
-                    style="text-align:center;padding:40px;"
-                >
-                    No candidates found.
-                </td>
-            </tr>
-        `;
+function getExperience(candidate) {
+
+    if (
+        candidate.experienceYears !== undefined &&
+        candidate.experienceYears !== null
+    ) {
+        return candidate.experienceYears;
+    }
+
+    return candidate.experience || 0;
+}
+
+
+// ==========================================
+// NORMALIZE SKILLS
+// ==========================================
+
+function getSkills(candidate) {
+
+    if (!Array.isArray(candidate.skills)) {
+        return [];
+    }
+
+    return candidate.skills
+        .map(skill => {
+
+            return String(skill)
+                .replace(/^\[/, "")
+                .replace(/\]$/, "")
+                .replace(/^["']|["']$/g, "")
+                .trim();
+
+        })
+        .filter(Boolean);
+}
+
+
+// ==========================================
+// STATISTICS
+// ==========================================
+
+function updateStatistics() {
+
+    document.getElementById("totalCandidates").textContent =
+        candidates.length;
+
+    document.getElementById("appliedCandidates").textContent =
+        countStatus("Applied");
+
+    document.getElementById("screeningCandidates").textContent =
+        countStatus("Screening");
+
+    document.getElementById("interviewCandidates").textContent =
+        countStatus("Interview");
+
+    document.getElementById("selectedCandidates").textContent =
+        countStatus("Selected");
+}
+
+
+function countStatus(status) {
+
+    return candidates.filter(candidate => {
+
+        return (
+            candidate.status || "Applied"
+        ).toLowerCase() === status.toLowerCase();
+
+    }).length;
+}
+
+
+// ==========================================
+// POSITION FILTER
+// ==========================================
+
+function populatePositionFilter() {
+
+    const positions = [
+        ...new Set(
+
+            candidates
+                .map(candidate => getPosition(candidate))
+                .filter(position => position !== "-")
+
+        )
+    ];
+
+    positionFilter.innerHTML =
+        `<option value="All">All Positions</option>`;
+
+    positions
+        .sort()
+        .forEach(position => {
+
+            const option =
+                document.createElement("option");
+
+            option.value = position;
+
+            option.textContent = position;
+
+            positionFilter.appendChild(option);
+
+        });
+}
+
+
+// ==========================================
+// RENDER CANDIDATES
+// ==========================================
+
+function renderCandidates() {
+
+    let filteredCandidates = [...candidates];
+
+    const search =
+        searchInput.value
+            .trim()
+            .toLowerCase();
+
+    const status =
+        statusFilter.value;
+
+    const position =
+        positionFilter.value;
+
+
+    // --------------------------------------
+    // SEARCH
+    // --------------------------------------
+
+    if (search) {
+
+        filteredCandidates =
+            filteredCandidates.filter(candidate => {
+
+                const skills =
+                    getSkills(candidate).join(" ");
+
+                const candidatePosition =
+                    getPosition(candidate);
+
+                return (
+
+                    (candidate.name || "")
+                        .toLowerCase()
+                        .includes(search)
+
+                    ||
+
+                    (candidate.email || "")
+                        .toLowerCase()
+                        .includes(search)
+
+                    ||
+
+                    candidatePosition
+                        .toLowerCase()
+                        .includes(search)
+
+                    ||
+
+                    skills
+                        .toLowerCase()
+                        .includes(search)
+
+                    ||
+
+                    (candidate.location || "")
+                        .toLowerCase()
+                        .includes(search)
+
+                );
+
+            });
+    }
+
+
+    // --------------------------------------
+    // STATUS FILTER
+    // --------------------------------------
+
+    if (status !== "All") {
+
+        filteredCandidates =
+            filteredCandidates.filter(candidate => {
+
+                return (
+                    candidate.status || "Applied"
+                ).toLowerCase() === status.toLowerCase();
+
+            });
+    }
+
+
+    // --------------------------------------
+    // POSITION FILTER
+    // --------------------------------------
+
+    if (position !== "All") {
+
+        filteredCandidates =
+            filteredCandidates.filter(candidate => {
+
+                return getPosition(candidate) === position;
+
+            });
+    }
+
+
+    // --------------------------------------
+    // SORT
+    // --------------------------------------
+
+    const sort = sortFilter.value;
+
+    if (sort === "newest") {
+
+        filteredCandidates.sort(
+            (a, b) =>
+                new Date(b.createdAt || 0) -
+                new Date(a.createdAt || 0)
+        );
+
+    }
+
+    else if (sort === "oldest") {
+
+        filteredCandidates.sort(
+            (a, b) =>
+                new Date(a.createdAt || 0) -
+                new Date(b.createdAt || 0)
+        );
+
+    }
+
+    else if (sort === "name") {
+
+        filteredCandidates.sort(
+            (a, b) =>
+                (a.name || "").localeCompare(
+                    b.name || ""
+                )
+        );
+    }
+
+
+    // --------------------------------------
+    // DISPLAY
+    // --------------------------------------
+
+    tableBody.innerHTML = "";
+
+    if (filteredCandidates.length === 0) {
+
+        emptyState.classList.remove("hidden");
 
         return;
     }
 
+    emptyState.classList.add("hidden");
 
-    list.forEach(candidate => {
 
-        const tr =
-            document.createElement("tr");
+    filteredCandidates.forEach(candidate => {
 
-
-        const initials =
-            (candidate.name || "?")
-                .split(" ")
-                .map(
-                    word => word[0]
-                )
-                .join("")
-                .substring(0, 2)
-                .toUpperCase();
-
-
-        const rating =
-            Number(
-                candidate.rating
-            ) || 0;
-
-
-        const stars =
-            "★".repeat(rating) +
-            "☆".repeat(
-                5 - rating
-            );
-
-
-        const appliedOn =
-            candidate.appliedDate ||
-            candidate.createdAt;
-
-
-        const date =
-            appliedOn
-                ? new Date(
-                    appliedOn
-                ).toLocaleDateString(
-                    "en-IN",
-                    {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric"
-                    }
-                )
-                : "-";
-
-
-        tr.innerHTML = `
-
-            <td>
-
-                <input
-                    type="checkbox"
-                    class="row-check"
-                    data-id="${candidate._id}"
-                >
-
-            </td>
-
-
-            <td>
-
-                <div class="candidate-cell">
-
-                    <div class="avatar">
-                        ${initials}
-                    </div>
-
-                    <div>
-
-                        <div class="candidate-name">
-                            ${escapeHtml(
-                                candidate.name
-                            )}
-                        </div>
-
-                        <div class="candidate-email">
-                            ${escapeHtml(
-                                candidate.email
-                            )}
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </td>
-
-
-            <td>
-
-                <strong>
-                    ${escapeHtml(
-                        candidate.jobRole ||
-                        "-"
-                    )}
-                </strong>
-
-                <div class="candidate-email">
-                    ${escapeHtml(
-                        candidate.source ||
-                        "Direct"
-                    )}
-                </div>
-
-            </td>
-
-
-            <td>
-
-                <span
-                    class="stage-badge stage-${candidate.stage}"
-                >
-                    ${candidate.stage || "Applied"}
-                </span>
-
-            </td>
-
-
-            <td>
-
-                <div class="stars">
-                    ${stars}
-                </div>
-
-                <div class="experience">
-                    ${
-                        candidate.experienceYears ||
-                        0
-                    }
-                    yrs experience
-                </div>
-
-            </td>
-
-
-            <td>
-                ${date}
-            </td>
-
-
-            <td>
-
-                <div class="action-buttons">
-
-
-                    <button
-                        class="action-btn"
-                        onclick="viewProfile(
-                            '${candidate._id}'
-                        )"
-                    >
-                        Profile
-                    </button>
-
-
-                    <button
-                        class="action-btn"
-                        onclick="openEditCandidate(
-                            '${candidate._id}'
-                        )"
-                    >
-                        Edit
-                    </button>
-
-
-                    <button
-                        class="action-btn"
-                        onclick="changeStage(
-                            '${candidate._id}'
-                        )"
-                    >
-                        Stage
-                    </button>
-
-
-                    <button
-                        class="action-btn delete-btn"
-                        onclick="deleteCandidate(
-                            '${candidate._id}'
-                        )"
-                    >
-                        🗑
-                    </button>
-
-
-                </div>
-
-            </td>
-
-        `;
-
-
-        const checkbox =
-            tr.querySelector(
-                ".row-check"
-            );
-
-
-        checkbox.addEventListener(
-            "change",
-            () => {
-
-                if (checkbox.checked) {
-
-                    selectedIds.add(
-                        candidate._id
-                    );
-
-                } else {
-
-                    selectedIds.delete(
-                        candidate._id
-                    );
-
-                }
-
-            }
+        tableBody.appendChild(
+            createCandidateRow(candidate)
         );
-
-
-        tbody.appendChild(tr);
 
     });
 }
 
 
 // ==========================================
-// FILTER EVENTS
+// CREATE TABLE ROW
 // ==========================================
 
-searchInput.addEventListener(
-    "input",
-    loadCandidates
-);
+function createCandidateRow(candidate) {
 
-jobRoleFilter.addEventListener(
-    "input",
-    loadCandidates
-);
+    const row =
+        document.createElement("tr");
 
-skillFilter.addEventListener(
-    "input",
-    loadCandidates
-);
+    const initials =
+        getInitials(candidate.name);
 
-stageFilter.addEventListener(
-    "change",
-    loadCandidates
-);
+    const skills =
+        getSkills(candidate);
 
-ratingFilter.addEventListener(
-    "change",
-    loadCandidates
-);
+    const visibleSkills =
+        skills.slice(0, 2);
 
+    let skillsHTML =
+        visibleSkills
+            .map(skill => {
 
-// ==========================================
-// SELECT ALL
-// ==========================================
+                return `
+                    <span class="skill">
+                        ${escapeHTML(skill)}
+                    </span>
+                `;
 
-selectAll.addEventListener(
-    "change",
-    () => {
-
-        const checkboxes =
-            document.querySelectorAll(
-                ".row-check"
-            );
+            })
+            .join("");
 
 
-        checkboxes.forEach(
-            checkbox => {
+    if (skills.length > 2) {
 
-                checkbox.checked =
-                    selectAll.checked;
+        skillsHTML += `
+            <span class="skill more">
+                +${skills.length - 2}
+            </span>
+        `;
+    }
 
 
-                if (
-                    selectAll.checked
-                ) {
+    const status =
+        candidate.status || "Applied";
 
-                    selectedIds.add(
-                        checkbox.dataset.id
-                    );
+    const statusClass =
+        status.toLowerCase();
 
-                } else {
+    const position =
+        getPosition(candidate);
 
-                    selectedIds.delete(
-                        checkbox.dataset.id
-                    );
+    const experience =
+        getExperience(candidate);
 
+
+    row.innerHTML = `
+
+        <td>
+
+            <div class="candidate-info">
+
+                <div class="avatar">
+                    ${initials}
+                </div>
+
+                <div>
+
+                    <div class="candidate-name">
+                        ${escapeHTML(
+                            candidate.name || "Unknown"
+                        )}
+                    </div>
+
+                    <div class="candidate-email">
+                        ${escapeHTML(
+                            candidate.email || "-"
+                        )}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </td>
+
+
+        <td>
+
+            <div class="position">
+                ${escapeHTML(position)}
+            </div>
+
+        </td>
+
+
+        <td>
+
+            <div class="experience">
+                ${experience} years
+            </div>
+
+        </td>
+
+
+        <td>
+
+            <div class="skills">
+
+                ${
+                    skillsHTML ||
+                    `<span class="skill">
+                        No skills
+                    </span>`
                 }
 
-            }
-        );
+            </div>
 
-    }
-);
+        </td>
+
+
+        <td>
+
+            <div class="location">
+                ${escapeHTML(
+                    candidate.location || "-"
+                )}
+            </div>
+
+        </td>
+
+
+        <td>
+
+            <span class="status ${statusClass}">
+                ${escapeHTML(status)}
+            </span>
+
+        </td>
+
+
+        <td>
+
+            ${formatDate(
+                candidate.createdAt ||
+                candidate.appliedDate
+            )}
+
+        </td>
+
+
+        <td>
+
+            <button
+                class="action-btn"
+                title="View candidate"
+                onclick="showCandidateDetails('${candidate._id}')"
+            >
+                ⋮
+            </button>
+
+        </td>
+
+    `;
+
+
+    return row;
+}
 
 
 // ==========================================
-// ADD CANDIDATE MODAL
+// ADD CANDIDATE
 // ==========================================
 
-addCandidateBtn.addEventListener(
-    "click",
-    () => {
+document
+    .getElementById("openAddCandidate")
+    .addEventListener("click", () => {
 
-        candidateModal.style.display =
-            "flex";
+        openAddModal();
 
-    }
-);
+    });
 
 
-closeModal.addEventListener(
-    "click",
-    () => {
+function openAddModal() {
 
-        candidateModal.style.display =
-            "none";
+    candidateForm.reset();
 
-    }
-);
+    document.getElementById("candidateId").value = "";
+
+    document.getElementById("modalTitle").textContent =
+        "Add New Candidate";
+
+    document.getElementById("saveBtnText").textContent =
+        "Add Candidate";
+
+    candidateModal.classList.remove("hidden");
+}
 
 
 // ==========================================
-// CREATE CANDIDATE
+// CLOSE ADD MODAL
+// ==========================================
+
+document
+    .getElementById("closeModal")
+    .addEventListener(
+        "click",
+        closeCandidateModal
+    );
+
+
+document
+    .getElementById("cancelModal")
+    .addEventListener(
+        "click",
+        closeCandidateModal
+    );
+
+
+function closeCandidateModal() {
+
+    candidateModal.classList.add("hidden");
+}
+
+
+// ==========================================
+// SUBMIT CANDIDATE
 // ==========================================
 
 candidateForm.addEventListener(
     "submit",
-    async event => {
-
-        event.preventDefault();
-
-
-        const skills =
-            document.getElementById(
-                "skills"
-            ).value
-                .split(",")
-                .map(
-                    skill =>
-                        skill.trim()
-                )
-                .filter(Boolean);
-
-
-        const candidate = {
-
-            name:
-                document.getElementById(
-                    "name"
-                ).value,
-
-            email:
-                document.getElementById(
-                    "email"
-                ).value,
-
-            phone:
-                document.getElementById(
-                    "phone"
-                ).value,
-
-            jobRole:
-                document.getElementById(
-                    "jobRole"
-                ).value,
-
-            currentCompany:
-                document.getElementById(
-                    "currentCompany"
-                ).value,
-
-            experienceYears:
-                Number(
-                    document.getElementById(
-                        "experienceYears"
-                    ).value
-                ) || 0,
-
-            qualification:
-                document.getElementById(
-                    "qualification"
-                ).value,
-
-            yop:
-                Number(
-                    document.getElementById(
-                        "yop"
-                    ).value
-                ) || null,
-
-            education:
-                document.getElementById(
-                    "education"
-                ).value,
-
-            linkedin:
-                document.getElementById(
-                    "linkedin"
-                ).value,
-
-            portfolio:
-                document.getElementById(
-                    "portfolio"
-                ).value,
-
-            skills,
-
-            source:
-                document.getElementById(
-                    "source"
-                ).value,
-
-            stage:
-                document.getElementById(
-                    "stage"
-                ).value,
-
-            rating:
-                Number(
-                    document.getElementById(
-                        "rating"
-                    ).value
-                ),
-
-            coverLetter:
-                document.getElementById(
-                    "coverLetter"
-                ).value
-
-        };
-
-
-        try {
-
-            const response =
-                await fetch(
-                    API_URL,
-                    {
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        },
-
-                        body:
-                            JSON.stringify(
-                                candidate
-                            )
-                    }
-                );
-
-
-            const data =
-                await response.json();
-
-
-            if (!response.ok) {
-
-                alert(
-                    data.message ||
-                    "Failed to create candidate"
-                );
-
-                return;
-            }
-
-
-            alert(
-                "Candidate added successfully"
-            );
-
-
-            candidateForm.reset();
-
-            candidateModal.style.display =
-                "none";
-
-
-            loadCandidates();
-
-
-        } catch (error) {
-
-            console.error(error);
-
-            alert(
-                "Unable to create candidate"
-            );
-
-        }
-
-    }
-);
-
-
-// ==========================================
-// VIEW PROFILE
-// ==========================================
-
-async function viewProfile(id) {
-
-    try {
-
-        const response =
-            await fetch(
-                `${API_URL}/${id}`
-            );
-
-
-        const candidate =
-            await response.json();
-
-
-        if (!response.ok) {
-
-            alert(
-                candidate.message ||
-                "Candidate not found"
-            );
-
-            return;
-        }
-
-
-        document.getElementById(
-            "profileName"
-        ).textContent =
-            candidate.name;
-
-
-        const rating =
-            Number(
-                candidate.rating
-            ) || 0;
-
-
-        const stars =
-            "★".repeat(rating) +
-            "☆".repeat(
-                5 - rating
-            );
-
-
-        document.getElementById(
-            "profileContent"
-        ).innerHTML = `
-
-            <div class="profile-grid">
-
-
-                <div class="profile-item">
-
-                    <strong>
-                        Email
-                    </strong>
-
-                    ${escapeHtml(
-                        candidate.email
-                    )}
-
-                </div>
-
-
-                <div class="profile-item">
-
-                    <strong>
-                        Phone
-                    </strong>
-
-                    ${escapeHtml(
-                        candidate.phone ||
-                        "-"
-                    )}
-
-                </div>
-
-
-                <div class="profile-item">
-
-                    <strong>
-                        Job Role
-                    </strong>
-
-                    ${escapeHtml(
-                        candidate.jobRole ||
-                        "-"
-                    )}
-
-                </div>
-
-
-                <div class="profile-item">
-
-                    <strong>
-                        Current Company
-                    </strong>
-
-                    ${escapeHtml(
-                        candidate.currentCompany ||
-                        "-"
-                    )}
-
-                </div>
-
-
-                <div class="profile-item">
-
-                    <strong>
-                        Experience
-                    </strong>
-
-                    ${
-                        candidate.experienceYears ||
-                        0
-                    }
-                    years
-
-                </div>
-
-
-                <div class="profile-item">
-
-                    <strong>
-                        Qualification
-                    </strong>
-
-                    ${escapeHtml(
-                        candidate.qualification ||
-                        "-"
-                    )}
-
-                </div>
-
-
-                <div class="profile-item">
-
-                    <strong>
-                        Year of Passing
-                    </strong>
-
-                    ${
-                        candidate.yop ||
-                        "-"
-                    }
-
-                </div>
-
-
-                <div class="profile-item">
-
-                    <strong>
-                        Education
-                    </strong>
-
-                    ${escapeHtml(
-                        candidate.education ||
-                        "-"
-                    )}
-
-                </div>
-
-
-                <div class="profile-item">
-
-                    <strong>
-                        Source
-                    </strong>
-
-                    ${escapeHtml(
-                        candidate.source ||
-                        "-"
-                    )}
-
-                </div>
-
-
-                <div class="profile-item">
-
-                    <strong>
-                        Stage
-                    </strong>
-
-                    ${candidate.stage}
-
-                </div>
-
-
-                <div class="profile-item">
-
-                    <strong>
-                        Rating
-                    </strong>
-
-                    ${stars}
-
-                </div>
-
-
-                <div class="profile-item">
-
-                    <strong>
-                        Applied On
-                    </strong>
-
-                    ${
-                        candidate.appliedDate
-                            ? new Date(
-                                candidate.appliedDate
-                            ).toLocaleDateString(
-                                "en-IN"
-                            )
-                            : "-"
-                    }
-
-                </div>
-
-
-                <div class="profile-item">
-
-                    <strong>
-                        LinkedIn
-                    </strong>
-
-                    ${
-                        candidate.linkedin
-                            ? `<a
-                                href="${escapeHtml(
-                                    candidate.linkedin
-                                )}"
-                                target="_blank"
-                            >
-                                View LinkedIn
-                            </a>`
-                            : "-"
-                    }
-
-                </div>
-
-
-                <div class="profile-item">
-
-                    <strong>
-                        Portfolio
-                    </strong>
-
-                    ${
-                        candidate.portfolio
-                            ? `<a
-                                href="${escapeHtml(
-                                    candidate.portfolio
-                                )}"
-                                target="_blank"
-                            >
-                                View Portfolio
-                            </a>`
-                            : "-"
-                    }
-
-                </div>
-
-            </div>
-
-
-            <div
-                class="profile-item"
-                style="margin-top:16px;"
-            >
-
-                <strong>
-                    Skills
-                </strong>
-
-
-                <div class="profile-skills">
-
-                    ${
-                        (
-                            candidate.skills ||
-                            []
-                        )
-                        .map(
-                            skill => `
-                                <span class="skill-tag">
-                                    ${escapeHtml(
-                                        skill
-                                    )}
-                                </span>
-                            `
-                        )
-                        .join("")
-                    }
-
-                </div>
-
-            </div>
-
-        `;
-
-
-        profileModal.style.display =
-            "flex";
-
-
-    } catch (error) {
-
-        console.error(error);
-
-        alert(
-            "Unable to load candidate profile"
-        );
-
-    }
-}
-
-
-closeProfile.addEventListener(
-    "click",
-    () => {
-
-        profileModal.style.display =
-            "none";
-
-    }
-);
-
-
-// ==========================================
-// EDIT CANDIDATE
-// ==========================================
-
-async function openEditCandidate(id) {
-
-    try {
-
-        const response =
-            await fetch(
-                `${API_URL}/${id}`
-            );
-
-
-        const candidate =
-            await response.json();
-
-
-        if (!response.ok) {
-
-            alert(
-                candidate.message ||
-                "Candidate not found"
-            );
-
-            return;
-        }
-
-
-        document.getElementById(
-            "editCandidateId"
-        ).value =
-            candidate._id;
-
-
-        document.getElementById(
-            "editName"
-        ).value =
-            candidate.name || "";
-
-
-        document.getElementById(
-            "editEmail"
-        ).value =
-            candidate.email || "";
-
-
-        document.getElementById(
-            "editPhone"
-        ).value =
-            candidate.phone || "";
-
-
-        document.getElementById(
-            "editJobRole"
-        ).value =
-            candidate.jobRole || "";
-
-
-        document.getElementById(
-            "editCurrentCompany"
-        ).value =
-            candidate.currentCompany || "";
-
-
-        document.getElementById(
-            "editExperienceYears"
-        ).value =
-            candidate.experienceYears || 0;
-
-
-        document.getElementById(
-            "editQualification"
-        ).value =
-            candidate.qualification || "";
-
-
-        document.getElementById(
-            "editYop"
-        ).value =
-            candidate.yop || "";
-
-
-        document.getElementById(
-            "editEducation"
-        ).value =
-            candidate.education || "";
-
-
-        document.getElementById(
-            "editLinkedin"
-        ).value =
-            candidate.linkedin || "";
-
-
-        document.getElementById(
-            "editPortfolio"
-        ).value =
-            candidate.portfolio || "";
-
-
-        document.getElementById(
-            "editSkills"
-        ).value =
-            (
-                candidate.skills ||
-                []
-            ).join(", ");
-
-
-        document.getElementById(
-            "editSource"
-        ).value =
-            candidate.source ||
-            "Careers Portal";
-
-
-        document.getElementById(
-            "editStage"
-        ).value =
-            candidate.stage ||
-            "Applied";
-
-
-        document.getElementById(
-            "editRating"
-        ).value =
-            candidate.rating || 0;
-
-
-        document.getElementById(
-            "editCoverLetter"
-        ).value =
-            candidate.coverLetter || "";
-
-
-        editCandidateModal.style.display =
-            "flex";
-
-
-    } catch (error) {
-
-        console.error(error);
-
-        alert(
-            "Unable to load candidate"
-        );
-
-    }
-}
-
-
-closeEditModal.addEventListener(
-    "click",
-    () => {
-
-        editCandidateModal.style.display =
-            "none";
-
-    }
-);
-
-
-editCandidateForm.addEventListener(
-    "submit",
-    async event => {
+    async function (event) {
 
         event.preventDefault();
 
 
         const id =
-            document.getElementById(
-                "editCandidateId"
-            ).value;
+            document
+                .getElementById("candidateId")
+                .value;
 
 
-        const skills =
-            document.getElementById(
-                "editSkills"
-            ).value
-                .split(",")
-                .map(
-                    skill =>
-                        skill.trim()
-                )
-                .filter(Boolean);
+        const skillsValue =
+            document
+                .getElementById("candidateSkills")
+                .value;
 
 
-        const updatedCandidate = {
+        const candidateData = {
 
             name:
-                document.getElementById(
-                    "editName"
-                ).value,
+                document
+                    .getElementById("candidateName")
+                    .value
+                    .trim(),
 
             email:
-                document.getElementById(
-                    "editEmail"
-                ).value,
+                document
+                    .getElementById("candidateEmail")
+                    .value
+                    .trim(),
 
             phone:
-                document.getElementById(
-                    "editPhone"
-                ).value,
+                document
+                    .getElementById("candidatePhone")
+                    .value
+                    .trim(),
 
-            jobRole:
-                document.getElementById(
-                    "editJobRole"
-                ).value,
+            position:
+                document
+                    .getElementById("candidatePosition")
+                    .value
+                    .trim(),
 
-            currentCompany:
-                document.getElementById(
-                    "editCurrentCompany"
-                ).value,
-
-            experienceYears:
+            experience:
                 Number(
-                    document.getElementById(
-                        "editExperienceYears"
-                    ).value
+                    document
+                        .getElementById("candidateExperience")
+                        .value
                 ) || 0,
 
-            qualification:
-                document.getElementById(
-                    "editQualification"
-                ).value,
+            location:
+                document
+                    .getElementById("candidateLocation")
+                    .value
+                    .trim(),
 
-            yop:
-                Number(
-                    document.getElementById(
-                        "editYop"
-                    ).value
-                ) || null,
+            status:
+                document
+                    .getElementById("candidateStatus")
+                    .value,
 
-            education:
-                document.getElementById(
-                    "editEducation"
-                ).value,
+            skills:
+                skillsValue
+                    .split(",")
+                    .map(skill => skill.trim())
+                    .filter(Boolean),
 
-            linkedin:
-                document.getElementById(
-                    "editLinkedin"
-                ).value,
-
-            portfolio:
-                document.getElementById(
-                    "editPortfolio"
-                ).value,
-
-            skills,
-
-            source:
-                document.getElementById(
-                    "editSource"
-                ).value,
-
-            stage:
-                document.getElementById(
-                    "editStage"
-                ).value,
-
-            rating:
-                Number(
-                    document.getElementById(
-                        "editRating"
-                    ).value
-                ),
-
-            coverLetter:
-                document.getElementById(
-                    "editCoverLetter"
-                ).value
+            resume:
+                document
+                    .getElementById("candidateResume")
+                    .value
+                    .trim()
         };
 
 
@@ -1393,9 +669,16 @@ editCandidateForm.addEventListener(
 
             const response =
                 await fetch(
-                    `${API_URL}/${id}`,
+
+                    id
+                        ? `${API_URL}/${id}`
+                        : API_URL,
+
                     {
-                        method: "PUT",
+                        method:
+                            id
+                                ? "PUT"
+                                : "POST",
 
                         headers: {
                             "Content-Type":
@@ -1404,46 +687,43 @@ editCandidateForm.addEventListener(
 
                         body:
                             JSON.stringify(
-                                updatedCandidate
+                                candidateData
                             )
                     }
                 );
 
 
-            const data =
+            const result =
                 await response.json();
 
 
             if (!response.ok) {
 
-                alert(
-                    data.message ||
-                    "Update failed"
+                throw new Error(
+                    result.message ||
+                    "Something went wrong"
                 );
-
-                return;
             }
 
 
-            alert(
-                "Candidate updated successfully"
+            closeCandidateModal();
+
+
+            showToast(
+                id
+                    ? "Candidate updated successfully"
+                    : "Candidate added successfully"
             );
 
 
-            editCandidateModal.style.display =
-                "none";
-
-
-            loadCandidates();
+            await loadCandidates();
 
 
         } catch (error) {
 
             console.error(error);
 
-            alert(
-                "Unable to update candidate"
-            );
+            showToast(error.message);
 
         }
 
@@ -1452,200 +732,306 @@ editCandidateForm.addEventListener(
 
 
 // ==========================================
-// CHANGE STAGE
+// SHOW DETAILS
 // ==========================================
 
-async function changeStage(id) {
+function showCandidateDetails(id) {
 
-    const stage =
-        prompt(
-            "Enter stage:\n" +
-            "Applied\n" +
-            "Screening\n" +
-            "Interview\n" +
-            "Selected\n" +
-            "Rejected"
+    const candidate =
+        candidates.find(
+            item => item._id === id
         );
 
 
-    if (!stage) {
+    if (!candidate) {
         return;
     }
 
 
-    const validStages = [
-        "Applied",
-        "Screening",
-        "Interview",
-        "Selected",
-        "Rejected"
-    ];
+    const skills =
+        getSkills(candidate);
+
+    const position =
+        getPosition(candidate);
+
+    const experience =
+        getExperience(candidate);
+
+    const status =
+        candidate.status || "Applied";
 
 
-    if (
-        !validStages.includes(stage)
-    ) {
+    const skillsHTML =
+        skills.length
 
-        alert(
-            "Invalid stage"
-        );
+            ? skills
+                .map(skill => {
 
-        return;
-    }
+                    return `
+                        <span class="detail-skill">
+                            ${escapeHTML(skill)}
+                        </span>
+                    `;
 
+                })
+                .join("")
 
-    try {
-
-        const response =
-            await fetch(
-                `${API_URL}/${id}/stage`,
-                {
-                    method: "PATCH",
-
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
-
-                    body:
-                        JSON.stringify({
-                            stage
-                        })
-                }
-            );
+            : `<span>No skills added</span>`;
 
 
-        const data =
-            await response.json();
+    document.getElementById(
+        "candidateDetails"
+    ).innerHTML = `
+
+        <div class="details-content">
 
 
-        if (!response.ok) {
+            <div class="details-profile">
 
-            alert(
-                data.message ||
-                "Failed to update stage"
-            );
-
-            return;
-        }
+                <div class="details-avatar">
+                    ${getInitials(candidate.name)}
+                </div>
 
 
-        alert(
-            "Candidate stage updated"
-        );
+                <div>
+
+                    <h2>
+                        ${escapeHTML(
+                            candidate.name || "Unknown"
+                        )}
+                    </h2>
+
+                    <p>
+                        ${escapeHTML(position)}
+                    </p>
+
+                    <span class="status ${status.toLowerCase()}">
+                        ${escapeHTML(status)}
+                    </span>
+
+                </div>
+
+            </div>
 
 
-        loadCandidates();
+            <div class="details-grid">
 
 
-    } catch (error) {
+                <div class="detail-item">
 
-        console.error(error);
+                    <label>Email</label>
 
-        alert(
-            "Unable to update stage"
-        );
+                    <strong>
+                        ${escapeHTML(
+                            candidate.email || "-"
+                        )}
+                    </strong>
 
-    }
+                </div>
+
+
+                <div class="detail-item">
+
+                    <label>Phone</label>
+
+                    <strong>
+                        ${escapeHTML(
+                            candidate.phone || "-"
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <label>Position</label>
+
+                    <strong>
+                        ${escapeHTML(position)}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <label>Experience</label>
+
+                    <strong>
+                        ${experience} years
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <label>Location</label>
+
+                    <strong>
+                        ${escapeHTML(
+                            candidate.location || "-"
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <label>Source</label>
+
+                    <strong>
+                        ${escapeHTML(
+                            candidate.source || "-"
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <label>Rating</label>
+
+                    <strong>
+                        ⭐ ${candidate.rating || 0}/5
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <label>Added</label>
+
+                    <strong>
+                        ${formatDate(
+                            candidate.createdAt ||
+                            candidate.appliedDate
+                        )}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="details-skills">
+
+                <h4>Skills</h4>
+
+                <div class="details-skills-container">
+
+                    ${skillsHTML}
+
+                </div>
+
+            </div>
+
+
+            <div class="modal-footer">
+
+                <button
+                    class="cancel-btn"
+                    onclick="editCandidate('${candidate._id}')"
+                >
+                    Edit Candidate
+                </button>
+
+
+                <button
+                    class="save-btn"
+                    onclick="deleteCandidate('${candidate._id}')"
+                >
+                    Delete Candidate
+                </button>
+
+            </div>
+
+
+        </div>
+
+    `;
+
+
+    detailsModal.classList.remove("hidden");
 }
 
 
 // ==========================================
-// BULK STAGE UPDATE
+// EDIT
 // ==========================================
 
-bulkStageBtn.addEventListener(
-    "click",
-    async () => {
+function editCandidate(id) {
 
-        const stage =
-            bulkStageSelect.value;
-
-
-        if (!stage) {
-
-            alert(
-                "Select a stage first"
-            );
-
-            return;
-        }
+    const candidate =
+        candidates.find(
+            item => item._id === id
+        );
 
 
-        if (
-            selectedIds.size === 0
-        ) {
-
-            alert(
-                "Select at least one candidate"
-            );
-
-            return;
-        }
-
-
-        try {
-
-            const response =
-                await fetch(
-                    `${API_URL}/bulk/stage`,
-                    {
-                        method: "PATCH",
-
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        },
-
-                        body:
-                            JSON.stringify({
-                                ids:
-                                    Array.from(
-                                        selectedIds
-                                    ),
-                                stage
-                            })
-                    }
-                );
-
-
-            const data =
-                await response.json();
-
-
-            if (!response.ok) {
-
-                alert(
-                    data.message ||
-                    "Bulk update failed"
-                );
-
-                return;
-            }
-
-
-            alert(
-                "Candidates updated successfully"
-            );
-
-
-            selectedIds.clear();
-
-            loadCandidates();
-
-
-        } catch (error) {
-
-            console.error(error);
-
-            alert(
-                "Bulk stage update failed"
-            );
-
-        }
-
+    if (!candidate) {
+        return;
     }
-);
+
+
+    detailsModal.classList.add("hidden");
+
+
+    document.getElementById("candidateId").value =
+        candidate._id;
+
+
+    document.getElementById("candidateName").value =
+        candidate.name || "";
+
+
+    document.getElementById("candidateEmail").value =
+        candidate.email || "";
+
+
+    document.getElementById("candidatePhone").value =
+        candidate.phone || "";
+
+
+    document.getElementById("candidatePosition").value =
+        getPosition(candidate) === "-"
+            ? ""
+            : getPosition(candidate);
+
+
+    document.getElementById("candidateExperience").value =
+        getExperience(candidate);
+
+
+    document.getElementById("candidateLocation").value =
+        candidate.location || "";
+
+
+    document.getElementById("candidateStatus").value =
+        candidate.status || "Applied";
+
+
+    document.getElementById("candidateSkills").value =
+        getSkills(candidate).join(", ");
+
+
+    document.getElementById("candidateResume").value =
+        candidate.resume || "";
+
+
+    document.getElementById("modalTitle").textContent =
+        "Edit Candidate";
+
+
+    document.getElementById("saveBtnText").textContent =
+        "Save Changes";
+
+
+    candidateModal.classList.remove("hidden");
+}
 
 
 // ==========================================
@@ -1654,14 +1040,25 @@ bulkStageBtn.addEventListener(
 
 async function deleteCandidate(id) {
 
-    if (
-        !confirm(
-            "Are you sure you want to delete this candidate?"
-        )
-    ) {
+    const candidate =
+        candidates.find(
+            item => item._id === id
+        );
 
+
+    if (!candidate) {
         return;
+    }
 
+
+    const confirmed =
+        confirm(
+            `Are you sure you want to delete ${candidate.name}?`
+        );
+
+
+    if (!confirmed) {
+        return;
     }
 
 
@@ -1676,82 +1073,223 @@ async function deleteCandidate(id) {
             );
 
 
-        const data =
+        const result =
             await response.json();
 
 
         if (!response.ok) {
 
-            alert(
-                data.message ||
-                "Delete failed"
+            throw new Error(
+                result.message ||
+                "Failed to delete candidate"
             );
-
-            return;
         }
 
 
-        alert(
+        detailsModal.classList.add("hidden");
+
+
+        showToast(
             "Candidate deleted successfully"
         );
 
 
-        loadCandidates();
+        await loadCandidates();
 
 
     } catch (error) {
 
         console.error(error);
 
-        alert(
-            "Unable to delete candidate"
-        );
+        showToast(error.message);
 
     }
 }
 
 
 // ==========================================
-// ESCAPE HTML
+// FILTER EVENTS
 // ==========================================
 
-function escapeHtml(value) {
+searchInput.addEventListener(
+    "input",
+    renderCandidates
+);
+
+
+statusFilter.addEventListener(
+    "change",
+    renderCandidates
+);
+
+
+positionFilter.addEventListener(
+    "change",
+    renderCandidates
+);
+
+
+sortFilter.addEventListener(
+    "change",
+    renderCandidates
+);
+
+
+// ==========================================
+// CLOSE DETAILS
+// ==========================================
+
+document
+    .getElementById("closeDetailsModal")
+    .addEventListener("click", () => {
+
+        detailsModal.classList.add("hidden");
+
+    });
+
+
+detailsModal.addEventListener(
+    "click",
+    event => {
+
+        if (event.target === detailsModal) {
+
+            detailsModal.classList.add(
+                "hidden"
+            );
+
+        }
+
+    }
+);
+
+
+candidateModal.addEventListener(
+    "click",
+    event => {
+
+        if (event.target === candidateModal) {
+
+            closeCandidateModal();
+
+        }
+
+    }
+);
+
+
+// ==========================================
+// HELPERS
+// ==========================================
+
+function getInitials(name) {
+
+    if (!name) {
+        return "NA";
+    }
+
+
+    return name
+        .split(" ")
+        .filter(Boolean)
+        .slice(0, 2)
+        .map(word =>
+            word[0].toUpperCase()
+        )
+        .join("");
+}
+
+
+function formatDate(date) {
+
+    if (!date) {
+        return "-";
+    }
+
+
+    const parsedDate =
+        new Date(date);
+
+
+    if (isNaN(parsedDate)) {
+        return "-";
+    }
+
+
+    return parsedDate.toLocaleDateString(
+        "en-IN",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
+}
+
+
+function escapeHTML(value) {
 
     if (
         value === null ||
         value === undefined
     ) {
-
         return "";
-
     }
 
+
     return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
 
-        .replace(
-            /&/g,
-            "&amp;"
-        )
 
-        .replace(
-            /</g,
-            "&lt;"
-        )
+// ==========================================
+// TOAST
+// ==========================================
 
-        .replace(
-            />/g,
-            "&gt;"
-        )
+function showToast(message) {
 
-        .replace(
-            /"/g,
-            "&quot;"
-        )
+    const toast =
+        document.getElementById("toast");
 
-        .replace(
-            /'/g,
-            "&#039;"
-        );
+    const toastMessage =
+        document.getElementById("toastMessage");
+
+
+    if (!toast || !toastMessage) {
+        return;
+    }
+
+
+    toastMessage.textContent =
+        message;
+
+
+    toast.classList.add("show");
+
+
+    setTimeout(() => {
+
+        toast.classList.remove("show");
+
+    }, 3000);
+}
+
+
+// ==========================================
+// LOADING
+// ==========================================
+
+function showLoading() {
+
+    loadingState.classList.remove("hidden");
+
+    emptyState.classList.add("hidden");
+
+    tableBody.innerHTML = "";
 }
 
 
