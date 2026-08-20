@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>HireFlow - Jobs</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="navbar">
+
+        <div class="logo">
+            Hire<span>Flow</span>
+        </div>
+
+        <nav>
+            <a href="index.html">Dashboard</a>
+            <a href="jobs.html" class="active">Jobs</a>
+            <a href="applications.html">Applications</a>
+        </nav>
+
+        <div class="profile">
+            <div class="profile-icon">SK</div>
+            <span>Santhosh</span>
+        </div>
+
+    </header>
+
+
+    <main class="container">
+
+        <section class="welcome">
+
+            <div>
+                <h1>Jobs</h1>
+                <p>Manage all your job openings.</p>
+            </div>
+
+            <button class="add-job-btn" onclick="openJobForm()">
+                + Add New Job
+            </button>
+
+        </section>
+
+
+        <section class="applications-section">
+
+            <div class="section-header">
+
+                <div>
+                    <h2>All Jobs</h2>
+                    <p>View and manage your available positions.</p>
+                </div>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Job Title</th>
+                            <th>Department</th>
+                            <th>Location</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="jobsTable">
+
+                        <tr>
+                            <td colspan="6" class="loading">
+                                Loading jobs...
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Job Form -->
+
+    <div id="jobModal" class="modal">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h2 id="formTitle">Add New Job</h2>
+
+                <button
+                    class="close-btn"
+                    onclick="closeJobForm()">
+                    ×
+                </button>
+
+            </div>
+
+
+            <form id="jobForm">
+
+                <input
+                    type="hidden"
+                    id="jobId">
+
+
+                <label>Job Title</label>
+
+                <input
+                    type="text"
+                    id="title"
+                    required>
+
+
+                <label>Department</label>
+
+                <input
+                    type="text"
+                    id="department"
+                    required>
+
+
+                <label>Location</label>
+
+                <input
+                    type="text"
+                    id="location"
+                    required>
+
+
+                <label>Job Type</label>
+
+                <select id="type" required>
+
+                    <option value="Full-Time">
+                        Full-Time
+                    </option>
+
+                    <option value="Part-Time">
+                        Part-Time
+                    </option>
+
+                    <option value="Internship">
+                        Internship
+                    </option>
+
+                </select>
+
+
+                <label>Experience Level</label>
+
+                <input
+                    type="text"
+                    id="experienceLevel"
+                    required>
+
+
+                <label>Salary Range</label>
+
+                <input
+                    type="text"
+                    id="salaryRange"
+                    placeholder="$50,000 - $80,000"
+                    required>
+
+
+                <label>Description</label>
+
+                <textarea
+                    id="description"
+                    required>
+                </textarea>
+
+
+                <label>Responsibilities</label>
+
+                <textarea
+                    id="responsibilities"
+                    placeholder="Separate each responsibility with a comma"
+                    required>
+                </textarea>
+
+
+                <label>Skills</label>
+
+                <textarea
+                    id="skills"
+                    placeholder="Node.js, MongoDB, React"
+                    required>
+                </textarea>
+
+
+                <label>Status</label>
+
+                <select id="status">
+
+                    <option value="Active">
+                        Active
+                    </option>
+
+                    <option value="Draft">
+                        Draft
+                    </option>
+
+                    <option value="Closed">
+                        Closed
+                    </option>
+
+                </select>
+
+
+                <button
+                    type="submit"
+                    class="save-btn">
+                    Save Job
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <script src="jobs.js"></script>
+
+</body>
+</html>
