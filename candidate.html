@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>HireFlow - Candidates</title>
+
+    <link
+        rel="stylesheet"
+        href="candidates.css"
+    >
+
+</head>
+
+<body>
+
+
+<header class="topbar">
+
+    <div class="brand">
+
+        <h1>HireFlow</h1>
+
+        <span>ATS</span>
+
+    </div>
+
+    <div class="brand-subtitle">
+        Recruitment Pipeline
+    </div>
+
+</header>
+
+
+<main class="page">
+
+
+    <!-- PAGE HEADER -->
+
+    <section class="page-header">
+
+        <div>
+
+            <h2>All Candidates</h2>
+
+            <p>
+                Manage candidate records, review profiles,
+                and track applicants
+            </p>
+
+        </div>
+
+
+        <button
+            id="addCandidateBtn"
+            class="btn btn-primary"
+        >
+            + Add Candidate
+        </button>
+
+    </section>
+
+
+    <!-- FILTERS -->
+
+    <section class="filter-bar">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="🔍 Search candidates..."
+        >
+
+        <input
+            type="text"
+            id="jobRoleFilter"
+            placeholder="Job role"
+        >
+
+        <select id="stageFilter">
+
+            <option value="">
+                All Stages
+            </option>
+
+            <option value="Applied">
+                Applied
+            </option>
+
+            <option value="Screening">
+                Screening
+            </option>
+
+            <option value="Interview">
+                Interview
+            </option>
+
+            <option value="Selected">
+                Selected
+            </option>
+
+            <option value="Rejected">
+                Rejected
+            </option>
+
+        </select>
+
+
+        <input
+            type="text"
+            id="skillFilter"
+            placeholder="Skill"
+        >
+
+
+        <select id="ratingFilter">
+
+            <option value="0">
+                All Ratings
+            </option>
+
+            <option value="1">
+                1+ Stars
+            </option>
+
+            <option value="2">
+                2+ Stars
+            </option>
+
+            <option value="3">
+                3+ Stars
+            </option>
+
+            <option value="4">
+                4+ Stars
+            </option>
+
+            <option value="5">
+                5 Stars
+            </option>
+
+        </select>
+
+    </section>
+
+
+    <!-- TOOLBAR -->
+
+    <section class="toolbar">
+
+        <strong>
+
+            All Candidates:
+            <span id="candidateCount">
+                0
+            </span>
+
+        </strong>
+
+
+        <div class="toolbar-actions">
+
+            <select id="bulkStageSelect">
+
+                <option value="">
+                    Bulk Stage Move
+                </option>
+
+                <option value="Applied">
+                    Applied
+                </option>
+
+                <option value="Screening">
+                    Screening
+                </option>
+
+                <option value="Interview">
+                    Interview
+                </option>
+
+                <option value="Selected">
+                    Selected
+                </option>
+
+                <option value="Rejected">
+                    Rejected
+                </option>
+
+            </select>
+
+
+            <button
+                id="bulkStageBtn"
+                class="btn btn-secondary"
+            >
+                Apply
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- CANDIDATE TABLE -->
+
+    <section class="table-card">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+
+                        <input
+                            type="checkbox"
+                            id="selectAllCandidates"
+                        >
+
+                    </th>
+
+
+                    <th>
+                        Candidate
+                    </th>
+
+
+                    <th>
+                        Job Requisition
+                    </th>
+
+
+                    <th>
+                        Current Stage
+                    </th>
+
+
+                    <th>
+                        Rating & Experience
+                    </th>
+
+
+                    <th>
+                        Applied On
+                    </th>
+
+
+                    <th>
+                        Actions
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="candidatesTableBody">
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+</main>
+
+
+<!-- ADD CANDIDATE MODAL -->
+
+<div
+    id="candidateModal"
+    class="modal"
+>
+
+    <div class="modal-content">
+
+
+        <div class="modal-header">
+
+            <h2>
+                Add Candidate
+            </h2>
+
+
+            <button
+                id="closeModal"
+                class="close-btn"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="candidateForm">
+
+
+            <div class="form-grid">
+
+
+                <input
+                    id="name"
+                    type="text"
+                    placeholder="Candidate Name"
+                    required
+                >
+
+
+                <input
+                    id="email"
+                    type="email"
+                    placeholder="Email"
+                    required
+                >
+
+
+                <input
+                    id="phone"
+                    type="text"
+                    placeholder="Phone"
+                >
+
+
+                <input
+                    id="jobRole"
+                    type="text"
+                    placeholder="Job Role"
+                    required
+                >
+
+
+                <input
+                    id="currentCompany"
+                    type="text"
+                    placeholder="Current Company"
+                >
+
+
+                <input
+                    id="experienceYears"
+                    type="number"
+                    min="0"
+                    placeholder="Experience (Years)"
+                >
+
+
+                <input
+                    id="qualification"
+                    type="text"
+                    placeholder="Qualification"
+                >
+
+
+                <input
+                    id="yop"
+                    type="number"
+                    placeholder="Year of Passing"
+                >
+
+
+                <input
+                    id="education"
+                    type="text"
+                    placeholder="Education"
+                >
+
+
+                <input
+                    id="linkedin"
+                    type="url"
+                    placeholder="LinkedIn URL"
+                >
+
+
+                <input
+                    id="portfolio"
+                    type="url"
+                    placeholder="Portfolio URL"
+                >
+
+
+                <input
+                    id="skills"
+                    type="text"
+                    placeholder="Skills: Java, SQL, Spring Boot"
+                >
+
+
+                <select id="source">
+
+                    <option value="Careers Portal">
+                        Careers Portal
+                    </option>
+
+                    <option value="LinkedIn">
+                        LinkedIn
+                    </option>
+
+                    <option value="Referral">
+                        Referral
+                    </option>
+
+                    <option value="Indeed">
+                        Indeed
+                    </option>
+
+                    <option value="Direct">
+                        Direct
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+
+                <select id="stage">
+
+                    <option value="Applied">
+                        Applied
+                    </option>
+
+                    <option value="Screening">
+                        Screening
+                    </option>
+
+                    <option value="Interview">
+                        Interview
+                    </option>
+
+                    <option value="Selected">
+                        Selected
+                    </option>
+
+                    <option value="Rejected">
+                        Rejected
+                    </option>
+
+                </select>
+
+
+                <select id="rating">
+
+                    <option value="0">
+                        0 Stars
+                    </option>
+
+                    <option value="1">
+                        1 Star
+                    </option>
+
+                    <option value="2">
+                        2 Stars
+                    </option>
+
+                    <option value="3">
+                        3 Stars
+                    </option>
+
+                    <option value="4">
+                        4 Stars
+                    </option>
+
+                    <option value="5">
+                        5 Stars
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <textarea
+                id="coverLetter"
+                placeholder="Cover letter"
+                rows="4"
+            ></textarea>
+
+
+            <button
+                type="submit"
+                class="btn btn-primary full-width"
+            >
+                Save Candidate
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- PROFILE MODAL -->
+
+<div
+    id="profileModal"
+    class="modal"
+>
+
+    <div class="modal-content">
+
+
+        <div class="modal-header">
+
+            <h2 id="profileName">
+                Candidate Profile
+            </h2>
+
+
+            <button
+                id="closeProfile"
+                class="close-btn"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div id="profileContent"></div>
+
+    </div>
+
+</div>
+
+
+<!-- EDIT CANDIDATE MODAL -->
+
+<div
+    id="editCandidateModal"
+    class="modal"
+>
+
+    <div class="modal-content">
+
+
+        <div class="modal-header">
+
+            <h2>
+                Edit Candidate
+            </h2>
+
+
+            <button
+                id="closeEditModal"
+                class="close-btn"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="editCandidateForm">
+
+
+            <input
+                type="hidden"
+                id="editCandidateId"
+            >
+
+
+            <div class="form-grid">
+
+
+                <input
+                    id="editName"
+                    type="text"
+                    placeholder="Candidate Name"
+                    required
+                >
+
+
+                <input
+                    id="editEmail"
+                    type="email"
+                    placeholder="Email"
+                    required
+                >
+
+
+                <input
+                    id="editPhone"
+                    type="text"
+                    placeholder="Phone"
+                >
+
+
+                <input
+                    id="editJobRole"
+                    type="text"
+                    placeholder="Job Role"
+                    required
+                >
+
+
+                <input
+                    id="editCurrentCompany"
+                    type="text"
+                    placeholder="Current Company"
+                >
+
+
+                <input
+                    id="editExperienceYears"
+                    type="number"
+                    min="0"
+                    placeholder="Experience (Years)"
+                >
+
+
+                <input
+                    id="editQualification"
+                    type="text"
+                    placeholder="Qualification"
+                >
+
+
+                <input
+                    id="editYop"
+                    type="number"
+                    placeholder="Year of Passing"
+                >
+
+
+                <input
+                    id="editEducation"
+                    type="text"
+                    placeholder="Education"
+                >
+
+
+                <input
+                    id="editLinkedin"
+                    type="url"
+                    placeholder="LinkedIn URL"
+                >
+
+
+                <input
+                    id="editPortfolio"
+                    type="url"
+                    placeholder="Portfolio URL"
+                >
+
+
+                <input
+                    id="editSkills"
+                    type="text"
+                    placeholder="Skills: Java, SQL, Spring Boot"
+                >
+
+
+                <select id="editSource">
+
+                    <option value="Careers Portal">
+                        Careers Portal
+                    </option>
+
+                    <option value="LinkedIn">
+                        LinkedIn
+                    </option>
+
+                    <option value="Referral">
+                        Referral
+                    </option>
+
+                    <option value="Indeed">
+                        Indeed
+                    </option>
+
+                    <option value="Direct">
+                        Direct
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+
+                <select id="editStage">
+
+                    <option value="Applied">
+                        Applied
+                    </option>
+
+                    <option value="Screening">
+                        Screening
+                    </option>
+
+                    <option value="Interview">
+                        Interview
+                    </option>
+
+                    <option value="Selected">
+                        Selected
+                    </option>
+
+                    <option value="Rejected">
+                        Rejected
+                    </option>
+
+                </select>
+
+
+                <select id="editRating">
+
+                    <option value="0">
+                        0 Stars
+                    </option>
+
+                    <option value="1">
+                        1 Star
+                    </option>
+
+                    <option value="2">
+                        2 Stars
+                    </option>
+
+                    <option value="3">
+                        3 Stars
+                    </option>
+
+                    <option value="4">
+                        4 Stars
+                    </option>
+
+                    <option value="5">
+                        5 Stars
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <textarea
+                id="editCoverLetter"
+                placeholder="Cover letter"
+                rows="4"
+            ></textarea>
+
+
+            <button
+                type="submit"
+                class="btn btn-primary full-width"
+            >
+                Save Changes
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script src="candidates.js"></script>
+
+</body>
+
+</html>

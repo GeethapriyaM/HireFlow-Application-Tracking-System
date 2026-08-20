@@ -1,0 +1,544 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f7fb;
+    color: #1f2937;
+}
+
+
+/* ==============================
+   TOP BAR
+================================ */
+
+.topbar {
+    height: 72px;
+
+    background:blue;
+
+    color: white;
+
+    padding: 0 32px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.brand {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+.brand h1 {
+    font-size: 24px;
+}
+
+.brand span {
+    font-size: 12px;
+
+    background: #2563eb;
+
+    padding: 4px 8px;
+
+    border-radius: 5px;
+}
+
+.brand-subtitle {
+    color: #d1d5db;
+}
+
+
+/* ==============================
+   PAGE
+================================ */
+
+.page {
+    padding: 32px;
+}
+
+
+/* ==============================
+   HEADER
+================================ */
+
+.page-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 24px;
+}
+
+.page-header h2 {
+    font-size: 28px;
+}
+
+.page-header p {
+    color: #6b7280;
+
+    margin-top: 6px;
+}
+
+
+/* ==============================
+   BUTTONS
+================================ */
+
+.btn {
+    border: none;
+
+    border-radius: 7px;
+
+    padding: 11px 16px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+}
+
+.btn-primary {
+    background: #2563eb;
+
+    color: white;
+}
+
+.btn-secondary {
+    background: white;
+
+    color: #374151;
+
+    border: 1px solid #d1d5db;
+}
+
+
+/* ==============================
+   FILTERS
+================================ */
+
+.filter-bar {
+    display: flex;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+
+    margin-bottom: 18px;
+}
+
+.filter-bar input,
+.filter-bar select,
+.toolbar select,
+.form-grid input,
+.form-grid select,
+textarea {
+    padding: 11px 13px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 7px;
+
+    background: white;
+
+    font-size: 14px;
+}
+
+.filter-bar input {
+    min-width: 190px;
+}
+
+
+/* ==============================
+   TOOLBAR
+================================ */
+
+.toolbar {
+    background: white;
+
+    padding: 16px 18px;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 10px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 12px;
+}
+
+.toolbar-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+/* ==============================
+   TABLE
+================================ */
+
+.table-card {
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 10px;
+
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+th,
+td {
+    text-align: left;
+
+    padding: 16px 14px;
+
+    border-bottom: 1px solid #eef0f3;
+
+    vertical-align: middle;
+}
+
+th {
+    font-size: 12px;
+
+    color: #6b7280;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.4px;
+
+    background: #fafafa;
+}
+
+
+/* ==============================
+   CANDIDATE
+================================ */
+
+.candidate-cell {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+.avatar {
+    width: 42px;
+
+    height: 42px;
+
+    border-radius: 50%;
+
+    background: #dbeafe;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-weight: bold;
+
+    color: #1d4ed8;
+}
+
+.candidate-name {
+    font-weight: 700;
+}
+
+.candidate-email {
+    font-size: 12px;
+
+    color: #6b7280;
+
+    margin-top: 3px;
+}
+
+
+/* ==============================
+   STAGES
+================================ */
+
+.stage-badge {
+    display: inline-block;
+
+    padding: 5px 10px;
+
+    border-radius: 999px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+.stage-Applied {
+    background: #dbeafe;
+
+    color: #1d4ed8;
+}
+
+.stage-Screening {
+    background: #fef3c7;
+
+    color: #92400e;
+}
+
+.stage-Interview {
+    background: #ede9fe;
+
+    color: #6d28d9;
+}
+
+.stage-Selected {
+    background: #dcfce7;
+
+    color: #166534;
+}
+
+.stage-Rejected {
+    background: #fee2e2;
+
+    color: #991b1b;
+}
+
+
+/* ==============================
+   RATING
+================================ */
+
+.stars {
+    font-size: 16px;
+    color: #f5b301;
+}
+
+.experience {
+    font-size: 12px;
+
+    color: #6b7280;
+
+    margin-top: 3px;
+}
+
+
+/* ==============================
+   ACTIONS
+================================ */
+
+.action-buttons {
+    display: flex;
+
+    gap: 6px;
+}
+
+.action-btn {
+    border: 1px solid #d1d5db;
+
+    background: white;
+
+    padding: 6px 10px;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+}
+
+.delete-btn {
+    color: #b91c1c;
+}
+
+
+/* ==============================
+   MODAL
+================================ */
+
+.modal {
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(15, 23, 42, 0.55);
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 20px;
+
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+
+    width: min(800px, 100%);
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    border-radius: 12px;
+
+    padding: 24px;
+}
+
+.modal-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+}
+
+.close-btn {
+    border: none;
+
+    background: transparent;
+
+    font-size: 28px;
+
+    cursor: pointer;
+
+    color: #6b7280;
+}
+
+
+/* ==============================
+   FORM
+================================ */
+
+.form-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 12px;
+
+    margin-bottom: 12px;
+}
+
+textarea {
+    width: 100%;
+
+    resize: vertical;
+
+    margin-bottom: 14px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+
+/* ==============================
+   PROFILE
+================================ */
+
+.profile-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 16px;
+}
+
+.profile-item {
+    padding: 12px;
+
+    background: #f8fafc;
+
+    border-radius: 8px;
+}
+
+.profile-item strong {
+    display: block;
+
+    font-size: 12px;
+
+    color: #6b7280;
+
+    margin-bottom: 5px;
+}
+
+.profile-skills {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 7px;
+
+    margin-top: 8px;
+}
+
+.skill-tag {
+    background: #e0e7ff;
+
+    color: #3730a3;
+
+    padding: 5px 9px;
+
+    border-radius: 999px;
+
+    font-size: 12px;
+}
+
+
+/* ==============================
+   MOBILE
+================================ */
+
+@media (max-width: 800px) {
+
+    .page {
+        padding: 18px;
+    }
+
+    .page-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+    .toolbar {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 12px;
+    }
+
+    .form-grid,
+    .profile-grid {
+        grid-template-columns: 1fr;
+    }
+}
