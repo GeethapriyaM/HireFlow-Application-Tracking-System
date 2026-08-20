@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HireFlow - Interviews</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/script.js"></script>
+</head>
+<body>
+    <header>
+        <h1>HireFlow</h1>
+        <p>Applicant tracking system</p>
+    </header>
+    <main>
+        <section>
+            <h2>Interviews</h2>
+            <p>Manage and track candidate interviews.</p>
+    <div>
+            <h3>Upcoming Interviews</h3>
+    <table >
+    <thead> 
+                <tr>
+                <th>Candidate</th>
+                <th>Position</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Interview Type</th>
+                <th>Status</th>
+                <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+                <td>Arun Kumar</td>
+                <td>Backend Developer</td>
+                <td>20 Aug 2026</td>
+                <td>10:00 AM</td>
+                <td>Technical</td>
+                <td>Scheduled</td>
+                <td><button data-action="view-detail" data-page="interview-detail.html">View</button></td>
+    </tr>
+    <tr>
+            <td>Priya Sharma</td>
+            <td>Data Scientist</td>
+            <td>21 Aug 2026</td>
+            <td>11:30 AM</td>
+            <td>HR</td>
+            <td>Scheduled</td>
+          <td><button data-action="view-detail" data-page="interview-detail.html">View</button></td>
+    </tr>
+    </tbody>
+    </table>
+    </div>
+    <div>
+            <h3>Completed Interviews</h3>
+    <table border="1">
+    <thead>
+         <tr>
+             <th>Candidate</th>
+             <th>Position</th>
+             <th>Date</th>
+             <th>Interview Type</th>
+             <th>Status</th>
+             <th>Action</th>
+         </tr>
+    </thead>
+    <tbody>
+         <tr>
+            <td>Rahul Kumar</td>
+            <td>Frontend Developer</td>
+            <td>18 Aug 2026</td>
+            <td>Technical</td>
+            <td>Completed</td>
+            <td><button data-action="view-detail" data-page="interview-detail.html">View</button></td>
+    </tr>
+    </tbody>
+    </table>
+    </div>
+    <div>
+            <h3>Interview Actions</h3>
+            <button data-action="schedule-interview">Schedule Interview</button>
+    </div>
+    </section>
+    </main>
+</body>
+</html>
