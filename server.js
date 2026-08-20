@@ -7,6 +7,9 @@ const connectDB = require("./config/db");
 const connectCandidateRoute =
     require("./Routes/candidateRoute.js");
 
+const interviewRoute =
+    require("./Routes/interviewRoute.js");
+
 const app = express();
 
 
@@ -23,6 +26,12 @@ app.use(express.json());
 app.use(
     "/api/candidates",
     connectCandidateRoute
+);
+
+// INTERVIEW ROUTES
+app.use(
+    "/api/interviews",
+    interviewRoute
 );
 
 

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>HireFlow - Schedule Interview</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+</head>
+
+<body>
+
+    <header>
+
+        <h1>HireFlow</h1>
+
+        <p>Applicant tracking system</p>
+
+    </header>
+
+
+    <main>
+
+        <section>
+
+            <h2>Schedule Interview</h2>
+
+            <p>
+                Schedule an interview for a candidate.
+            </p>
+
+
+            <form id="scheduleInterviewForm">
+
+
+                <!-- Candidate -->
+
+                <div>
+
+                    <label for="candidate">
+                        Candidate:
+                    </label>
+
+                    <select
+                        id="candidate"
+                        required
+                    >
+
+                        <option value="">
+                            Select Candidate
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <br>
+
+
+                <!-- Date -->
+
+                <div>
+
+                    <label for="interviewDate">
+                        Interview Date:
+                    </label>
+
+                    <input
+                        type="date"
+                        id="interviewDate"
+                        required
+                    >
+
+                </div>
+
+                <br>
+
+
+                <!-- Time -->
+
+                <div>
+
+                    <label for="interviewTime">
+                        Interview Time:
+                    </label>
+
+                    <input
+                        type="time"
+                        id="interviewTime"
+                        required
+                    >
+
+                </div>
+
+                <br>
+
+
+                <!-- Interview Type -->
+
+                <div>
+
+                    <label for="interviewType">
+                        Interview Type:
+                    </label>
+
+                    <select
+                        id="interviewType"
+                        required
+                    >
+
+                        <option value="">
+                            Select Interview Type
+                        </option>
+
+                        <option value="Technical">
+                            Technical
+                        </option>
+
+                        <option value="HR">
+                            HR
+                        </option>
+
+                        <option value="Managerial">
+                            Managerial
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <br>
+
+
+                <!-- Interviewer -->
+
+                <div>
+
+                    <label for="interviewer">
+                        Interviewer:
+                    </label>
+
+                    <input
+                        type="text"
+                        id="interviewer"
+                        placeholder="Enter interviewer name"
+                        required
+                    >
+
+                </div>
+
+                <br>
+
+
+                <!-- Submit -->
+
+                <button
+                    type="submit"
+                >
+                    Schedule Interview
+                </button>
+
+
+            </form>
+
+        </section>
+
+    </main>
+
+
+    <script src="js/schedule-interview.js"></script>
+
+</body>
+
+</html>

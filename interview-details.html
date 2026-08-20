@@ -1,41 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>HireFlow - Interview Detail</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/script.js"></script>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
 </head>
+
 <body>
+
     <header>
+
         <h1>HireFlow</h1>
+
         <p>Applicant tracking system</p>
+
     </header>
+
+
     <main>
+
         <section>
+
             <h2>Interview Details</h2>
-            <p>View interview information for the selected candidate.</p>
+
+            <p>
+                View interview information for the selected candidate.
+            </p>
+
+
+            <!-- Candidate Information -->
+
             <div>
+
                 <h3>Candidate Information</h3>
-                <p><strong>Name:</strong> Arun Kumar</p>
-                <p><strong>Position:</strong> Backend Developer</p>
-                <p><strong>Experience:</strong> 2 years</p>
+
+                <p>
+                    <strong>Name:</strong>
+                    <span id="candidateName">Loading...</span>
+                </p>
+
+                <p>
+                    <strong>Position:</strong>
+                    <span id="candidateJobRole">Loading...</span>
+                </p>
+
+                <p>
+                    <strong>Experience:</strong>
+                    <span id="candidateExperience">Loading...</span>
+                </p>
+
+                <p>
+                    <strong>Email:</strong>
+                    <span id="candidateEmail">Loading...</span>
+                </p>
+
+                <p>
+                    <strong>Skills:</strong>
+                    <span id="candidateSkills">Loading...</span>
+                </p>
+
+                <p>
+                    <strong>Current Stage:</strong>
+                    <span id="candidateStage">Loading...</span>
+                </p>
+
             </div>
+
+
+            <!-- Interview Information -->
+
             <div>
+
                 <h3>Interview Information</h3>
-                <p><strong>Interview Date:</strong> 20 Aug 2026</p>
-                <p><strong>Interview Time:</strong> 10:00 AM</p>
-                <p><strong>Interview Type:</strong> Technical</p>
-                <p><strong>Interviewer:</strong> Komala</p>
-                <p><strong>Status:</strong> Scheduled</p>
+
+                <p>
+                    <strong>Interview Date:</strong>
+                    <span id="interviewDate">
+                        Not scheduled
+                    </span>
+                </p>
+
+                <p>
+                    <strong>Interview Time:</strong>
+                    <span id="interviewTime">
+                        Not scheduled
+                    </span>
+                </p>
+
+                <p>
+                    <strong>Interview Type:</strong>
+                    <span id="interviewType">
+                        Not scheduled
+                    </span>
+                </p>
+
+                <p>
+                    <strong>Interviewer:</strong>
+                    <span id="interviewer">
+                        Not assigned
+                    </span>
+                </p>
+
+                <p>
+                    <strong>Status:</strong>
+                    <span id="interviewStatus">
+                        Not scheduled
+                    </span>
+                </p>
+
             </div>
+
+
+            <!-- Interview Actions -->
+
             <div>
+
                 <h3>Interview Action</h3>
-                <button>Reschedule Interview</button>
-                <button>Cancel Interview</button>
+
+                <button id="rescheduleButton">
+                    Reschedule Interview
+                </button>
+
+                <button id="cancelButton">
+                    Cancel Interview
+                </button>
+
             </div>
+
+
+            <!-- Reschedule Form -->
+
+            <div
+                id="rescheduleForm"
+                style="display: none;"
+            >
+
+                <h3>Reschedule Interview</h3>
+
+                <label for="newInterviewDate">
+                    New Interview Date:
+                </label>
+
+                <input
+                    type="date"
+                    id="newInterviewDate"
+                >
+
+                <br><br>
+
+
+                <label for="newInterviewTime">
+                    New Interview Time:
+                </label>
+
+                <input
+                    type="time"
+                    id="newInterviewTime"
+                >
+
+                <br><br>
+
+
+                <button id="saveRescheduleButton">
+                    Save Reschedule
+                </button>
+
+                <button id="closeRescheduleButton">
+                    Close
+                </button>
+
+            </div>
+
         </section>
+
     </main>
+
+
+    <script src="js/interview-details.js"></script>
+
 </body>
+
 </html>
