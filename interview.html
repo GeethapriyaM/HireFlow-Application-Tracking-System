@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,269 +15,921 @@
 
     <link
         rel="stylesheet"
-        href="css/interview.css"
+        href="./css/interview.css"
     >
 
 </head>
 
+
 <body>
 
-    <!-- ================= HEADER ================= -->
 
-    <header class="top-header">
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
 
-        <div class="brand">
+    <aside class="sidebar">
 
-            <h1>HireFlow</h1>
+        <div class="logo">
 
-            <span>Applicant Tracking System</span>
+            <div class="logo-icon">
+                H
+            </div>
+
+            <span>
+                HireFlow
+            </span>
 
         </div>
 
-        <div class="header-badge">
-            Interview Management
+
+        <nav class="navigation">
+
+            <a
+                href="index.html"
+                class="nav-item"
+            >
+                <span>⌂</span>
+                Dashboard
+            </a>
+
+
+            <a
+                href="candidate.html"
+                class="nav-item"
+            >
+                <span>♙</span>
+                Candidates
+            </a>
+
+
+            <a
+                href="jobs.html"
+                class="nav-item"
+            >
+                <span>▣</span>
+                Jobs
+            </a>
+
+
+            <a
+                href="interview.html"
+                class="nav-item active"
+            >
+                <span>◷</span>
+                Interviews
+            </a>
+
+
+            <a
+                href="analytics.html"
+                class="nav-item"
+            >
+                <span>◉</span>
+                Reports
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a
+                href="#"
+                class="nav-item"
+            >
+                <span>⚙</span>
+                Settings
+            </a>
+
+
+            <div class="profile">
+
+                <div class="profile-avatar">
+                    GP
+                </div>
+
+                <div>
+                    <strong>
+                        Geetha Priya
+                    </strong>
+
+                    <small>
+                        Recruiter
+                    </small>
+                </div>
+
+                <span class="profile-more">
+                    ⋮
+                </span>
+
+            </div>
+
         </div>
 
-    </header>
+    </aside>
 
 
-    <!-- ================= MAIN ================= -->
 
-    <main class="page-container">
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
 
-        <!-- PAGE HEADING -->
+    <main class="main-content">
 
-        <div class="page-heading">
+
+        <!-- =================================================
+             TOP BAR
+        ================================================== -->
+
+        <header class="topbar">
 
             <div>
 
-                <p class="eyebrow">
-                    INTERVIEW MANAGEMENT
-                </p>
-
-                <h2>
+                <h1>
                     Interviews
-                </h2>
+                </h1>
 
-                <p class="subtitle">
-                    Manage and track candidate interviews,
-                    schedules, and interview status.
+                <p>
+                    Schedule, manage and track candidate interviews.
                 </p>
 
             </div>
 
 
             <button
-    type="button"
-    id="scheduleInterviewButton"
-    class="schedule-button"
-      >
-    + Schedule Interview
-</button>
+                class="add-btn"
+                id="openScheduleInterview"
+            >
 
-        </div>
+                <span>
+                    +
+                </span>
+
+                Schedule Interview
+
+            </button>
+
+        </header>
 
 
-        <!-- ================= UPCOMING ================= -->
 
-        <section class="interview-section">
+        <!-- =================================================
+             STATISTICS
+        ================================================== -->
 
-            <div class="section-header">
+        <section class="stats-grid">
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon total">
+                    ◷
+                </div>
 
                 <div>
 
-                    <h3>
-                        Upcoming Interviews
-                    </h3>
+                    <span>
+                        Total Interviews
+                    </span>
 
-                    <p>
-                        Interviews that are scheduled
-                        or currently in progress.
-                    </p>
-
-                </div>
-
-                <span class="section-badge upcoming-badge">
-                    Upcoming
-                </span>
-
-            </div>
-
-
-            <div class="table-wrapper">
-
-                <table id="upcomingInterviews">
-
-                    <thead>
-
-                        <tr>
-
-                            <th>Candidate</th>
-
-                            <th>Position</th>
-
-                            <th>Date</th>
-
-                            <th>Time</th>
-
-                            <th>Interview Type</th>
-
-                            <th>Status</th>
-
-                            <th>Action</th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody></tbody>
-
-                </table>
-
-            </div>
-
-        </section>
-
-
-        <!-- ================= COMPLETED ================= -->
-
-        <section class="interview-section">
-
-            <div class="section-header">
-
-                <div>
-
-                    <h3>
-                        Completed Interviews
-                    </h3>
-
-                    <p>
-                        Interviews that have already
-                        been completed.
-                    </p>
+                    <h2 id="totalInterviews">
+                        0
+                    </h2>
 
                 </div>
 
-                <span class="section-badge completed-badge">
-                    Completed
-                </span>
-
             </div>
 
 
-            <div class="table-wrapper">
 
-                <table id="completedInterviews">
+            <div class="stat-card">
 
-                    <thead>
-
-                        <tr>
-
-                            <th>Candidate</th>
-
-                            <th>Position</th>
-
-                            <th>Date</th>
-
-                            <th>Interview Type</th>
-
-                            <th>Status</th>
-
-                            <th>Action</th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody></tbody>
-
-                </table>
-
-            </div>
-
-        </section>
-
-
-        <!-- ================= QUICK INFO ================= -->
-
-        <div class="info-row">
-
-            <div class="info-card">
-
-                <div class="info-icon">
+                <div class="stat-icon scheduled">
                     📅
                 </div>
 
                 <div>
 
-                    <strong>
-                        Schedule
-                    </strong>
+                    <span>
+                        Scheduled
+                    </span>
 
-                    <p>
-                        Arrange interviews for
-                        candidates.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="info-card">
-
-                <div class="info-icon">
-                    👥
-                </div>
-
-                <div>
-
-                    <strong>
-                        Track Candidates
-                    </strong>
-
-                    <p>
-                        Monitor interview progress
-                        and status.
-                    </p>
+                    <h2 id="scheduledInterviews">
+                        0
+                    </h2>
 
                 </div>
 
             </div>
 
 
-            <div class="info-card">
 
-                <div class="info-icon">
+            <div class="stat-card">
+
+                <div class="stat-icon completed">
                     ✓
                 </div>
 
                 <div>
 
-                    <strong>
-                        Manage Results
-                    </strong>
+                    <span>
+                        Completed
+                    </span>
+
+                    <h2 id="completedInterviews">
+                        0
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon cancelled">
+                    ✕
+                </div>
+
+                <div>
+
+                    <span>
+                        Cancelled
+                    </span>
+
+                    <h2 id="cancelledInterviews">
+                        0
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             INTERVIEW SECTION
+        ================================================== -->
+
+        <section class="interview-section">
+
+
+            <!-- SECTION HEADER -->
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>
+                        All Interviews
+                    </h2>
 
                     <p>
-                        Review completed interviews
-                        and evaluations.
+                        View and manage scheduled candidate interviews.
                     </p>
 
                 </div>
 
             </div>
 
-        </div>
+
+
+            <!-- =================================================
+                 TOOLBAR
+            ================================================== -->
+
+            <div class="toolbar">
+
+
+                <!-- SEARCH -->
+
+                <div class="search-box">
+
+                    <span>
+                        ⌕
+                    </span>
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search interviews..."
+                    >
+
+                </div>
+
+
+
+                <!-- FILTERS -->
+
+                <div class="filters">
+
+
+                    <select id="statusFilter">
+
+                        <option value="All">
+                            All Status
+                        </option>
+
+                        <option value="Scheduled">
+                            Scheduled
+                        </option>
+
+                        <option value="Completed">
+                            Completed
+                        </option>
+
+                        <option value="Cancelled">
+                            Cancelled
+                        </option>
+
+                        <option value="Rescheduled">
+                            Rescheduled
+                        </option>
+
+                    </select>
+
+
+
+                    <select id="typeFilter">
+
+                        <option value="All">
+                            All Types
+                        </option>
+
+                        <option value="Technical">
+                            Technical
+                        </option>
+
+                        <option value="HR">
+                            HR
+                        </option>
+
+                        <option value="Managerial">
+                            Managerial
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+
+
+                    <select id="sortFilter">
+
+                        <option value="newest">
+                            Newest First
+                        </option>
+
+                        <option value="oldest">
+                            Oldest First
+                        </option>
+
+                        <option value="date">
+                            Interview Date
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 TABLE
+            ================================================== -->
+
+            <div class="table-container">
+
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Candidate
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Time
+                            </th>
+
+                            <th>
+                                Interview Type
+                            </th>
+
+                            <th>
+                                Interviewer
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="interviewTableBody">
+
+                    </tbody>
+
+                </table>
+
+
+
+                <!-- LOADING STATE -->
+
+                <div
+                    id="loadingState"
+                    class="state-message"
+                >
+
+                    <div class="loading-spinner"></div>
+
+                    <p>
+                        Loading interviews...
+                    </p>
+
+                </div>
+
+
+
+                <!-- EMPTY STATE -->
+
+                <div
+                    id="emptyState"
+                    class="state-message hidden"
+                >
+
+                    <div class="empty-icon">
+                        📅
+                    </div>
+
+                    <h3>
+                        No interviews found
+                    </h3>
+
+                    <p>
+                        Schedule an interview to get started.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
 
     </main>
 
 
-    <!-- ================= JAVASCRIPT ================= -->
 
-    <script src="js/interview.js"></script>
+    <!-- =====================================================
+         SCHEDULE / EDIT INTERVIEW MODAL
+    ====================================================== -->
+
+    <div
+        class="modal-overlay hidden"
+        id="interviewModal"
+    >
+
+
+        <div class="modal">
+
+
+            <!-- MODAL HEADER -->
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h2 id="formTitle">
+                        Schedule Interview
+                    </h2>
+
+                    <p>
+                        Enter interview information below.
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="close-btn"
+                    id="closeInterviewModal"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+
+            <!-- INTERVIEW FORM -->
+
+            <form id="interviewForm">
+
+
+                <input
+                    type="hidden"
+                    id="interviewId"
+                >
+
+
+
+                <div class="form-grid">
+
+
+                    <!-- CANDIDATE -->
+
+                    <div class="form-group full">
+
+                        <label>
+
+                            Candidate
+
+                            <span>
+                                *
+                            </span>
+
+                        </label>
+
+
+                        <select
+                            id="candidateId"
+                            required
+                        >
+
+                            <option value="">
+                                Select Candidate
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- DATE -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Interview Date
+
+                            <span>
+                                *
+                            </span>
+
+                        </label>
+
+
+                        <input
+                            type="date"
+                            id="interviewDate"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- TIME -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Interview Time
+
+                            <span>
+                                *
+                            </span>
+
+                        </label>
+
+
+                        <input
+                            type="time"
+                            id="interviewTime"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- INTERVIEW TYPE -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Interview Type
+
+                            <span>
+                                *
+                            </span>
+
+                        </label>
+
+
+                        <select
+                            id="interviewType"
+                            required
+                        >
+
+                            <option value="Technical">
+                                Technical
+                            </option>
+
+                            <option value="HR">
+                                HR
+                            </option>
+
+                            <option value="Managerial">
+                                Managerial
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- INTERVIEWER -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Interviewer
+
+                            <span>
+                                *
+                            </span>
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            id="interviewer"
+                            placeholder="Enter interviewer name"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- STATUS -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Status
+                        </label>
+
+
+                        <select id="interviewStatus">
+
+                            <option value="Scheduled">
+                                Scheduled
+                            </option>
+
+                            <option value="Completed">
+                                Completed
+                            </option>
+
+                            <option value="Cancelled">
+                                Cancelled
+                            </option>
+
+                            <option value="Rescheduled">
+                                Rescheduled
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- SCORE -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Evaluation Score
+                        </label>
+
+
+                        <input
+                            type="number"
+                            id="evaluationScore"
+                            min="0"
+                            max="100"
+                            placeholder="0 - 100"
+                        >
+
+                    </div>
+
+
+
+                    <!-- FEEDBACK -->
+
+                    <div class="form-group full">
+
+                        <label>
+                            Evaluation Feedback
+                        </label>
+
+
+                        <textarea
+                            id="evaluationFeedback"
+                            rows="4"
+                            placeholder="Enter interview feedback..."
+                        ></textarea>
+
+                    </div>
+
+
+
+                    <!-- DECISION -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Evaluation Decision
+                        </label>
+
+
+                        <select id="evaluationDecision">
+
+                            <option value="">
+                                Select Decision
+                            </option>
+
+                            <option value="selected">
+                                Selected
+                            </option>
+
+                            <option value="rejected">
+                                Rejected
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- MODAL FOOTER -->
+
+                <div class="modal-footer">
+
+
+                    <button
+                        type="button"
+                        class="cancel-btn"
+                        id="cancelInterview"
+                    >
+
+                        Cancel
+
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="save-btn"
+                    >
+
+                        <span id="saveBtnText">
+                            Schedule Interview
+                        </span>
+
+                    </button>
+
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         INTERVIEW DETAILS MODAL
+    ====================================================== -->
+
+    <div
+        class="modal-overlay hidden"
+        id="detailsModal"
+    >
+
+
+        <div class="modal details-modal">
+
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h2>
+                        Interview Details
+                    </h2>
+
+                    <p>
+                        Interview schedule and evaluation information.
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="close-btn"
+                    id="closeDetailsModal"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div id="interviewDetails">
+
+                <!-- Details will be loaded here -->
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         TOAST
+    ====================================================== -->
+
+    <div
+        id="toast"
+        class="toast"
+    >
+
+        <span id="toastMessage"></span>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="./js/interview.js"></script>
+
 
 </body>
 
 </html>
+

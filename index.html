@@ -1,0 +1,790 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>HireFlow - Dashboard</title>
+
+    <link
+        rel="stylesheet"
+        href="index.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+
+        <!-- LOGO -->
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                H
+            </div>
+
+            <span>
+                HireFlow
+            </span>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="navigation">
+
+
+            <a
+                href="index.html"
+                class="nav-item active"
+            >
+
+                <span>⌂</span>
+
+                Dashboard
+
+            </a>
+
+
+            <a
+                href="candidate.html"
+                class="nav-item"
+            >
+
+                <span>♙</span>
+
+                Candidates
+
+            </a>
+
+
+            <a
+                href="jobs.html"
+                class="nav-item"
+            >
+
+                <span>▣</span>
+
+                Jobs
+
+            </a>
+
+
+            <a
+                href="interview.html"
+                class="nav-item"
+            >
+
+                <span>◷</span>
+
+                Interviews
+
+            </a>
+
+
+            <a
+                href="analytics.html"
+                class="nav-item"
+            >
+
+                <span>◉</span>
+
+                Reports
+
+            </a>
+
+
+        </nav>
+
+
+        <!-- SIDEBAR BOTTOM -->
+
+        <div class="sidebar-bottom">
+
+
+            <a
+                href="#"
+                class="nav-item"
+            >
+
+                <span>⚙</span>
+
+                Settings
+
+            </a>
+
+
+            <div class="profile">
+
+
+                <div class="profile-avatar">
+                    GP
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        Geetha Priya
+                    </strong>
+
+                    <small>
+                        Recruiter
+                    </small>
+
+                </div>
+
+
+                <span class="profile-more">
+                    ⋮
+                </span>
+
+
+            </div>
+
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             TOP BAR
+        ================================================== -->
+
+        <header class="topbar">
+
+
+            <div>
+
+                <h1>
+                    Dashboard
+                </h1>
+
+                <p>
+                    Welcome back! Here's what's happening with your recruitment.
+                </p>
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- =================================================
+             STATISTICS
+        ================================================== -->
+
+        <section class="stats-grid">
+
+
+            <!-- TOTAL CANDIDATES -->
+
+            <div class="stat-card">
+
+
+                <div class="stat-icon candidates">
+                    ♙
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Total Candidates
+                    </span>
+
+                    <h2 id="totalCandidates">
+                        0
+                    </h2>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- TOTAL JOBS -->
+
+            <div class="stat-card">
+
+
+                <div class="stat-icon jobs">
+                    💼
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Total Jobs
+                    </span>
+
+                    <h2 id="totalJobs">
+                        0
+                    </h2>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ACTIVE JOBS -->
+
+            <div class="stat-card">
+
+
+                <div class="stat-icon active">
+                    ✓
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Active Jobs
+                    </span>
+
+                    <h2 id="activeJobs">
+                        0
+                    </h2>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- INTERVIEWS -->
+
+            <div class="stat-card">
+
+
+                <div class="stat-icon interviews">
+                    ◷
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Scheduled Interviews
+                    </span>
+
+                    <h2 id="scheduledInterviews">
+                        0
+                    </h2>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             DASHBOARD GRID
+        ================================================== -->
+
+        <section class="dashboard-grid">
+
+
+            <!-- =================================================
+                 RECENT CANDIDATES
+            ================================================== -->
+
+            <div class="dashboard-card">
+
+
+                <div class="card-header">
+
+
+                    <div>
+
+                        <h2>
+                            Recent Candidates
+                        </h2>
+
+                        <p>
+                            Latest candidates added to HireFlow.
+                        </p>
+
+                    </div>
+
+
+                    <a
+                        href="candidate.html"
+                        class="view-all"
+                    >
+                        View All
+                    </a>
+
+
+                </div>
+
+
+
+                <div class="table-container">
+
+
+                    <table>
+
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Candidate
+                                </th>
+
+                                <th>
+                                    Email
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="recentCandidates">
+
+                            <tr>
+
+                                <td
+                                    colspan="3"
+                                    class="loading"
+                                >
+                                    Loading candidates...
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+
+                    </table>
+
+
+                    <div
+                        id="candidateEmptyState"
+                        class="empty-state hidden"
+                    >
+
+                        <div>
+                            ♙
+                        </div>
+
+                        <p>
+                            No candidates found.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 RECENT JOBS
+            ================================================== -->
+
+            <div class="dashboard-card">
+
+
+                <div class="card-header">
+
+
+                    <div>
+
+                        <h2>
+                            Recent Jobs
+                        </h2>
+
+                        <p>
+                            Latest job openings.
+                        </p>
+
+                    </div>
+
+
+                    <a
+                        href="jobs.html"
+                        class="view-all"
+                    >
+                        View All
+                    </a>
+
+
+                </div>
+
+
+
+                <div class="table-container">
+
+
+                    <table>
+
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Job Title
+                                </th>
+
+                                <th>
+                                    Location
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="recentJobs">
+
+                            <tr>
+
+                                <td
+                                    colspan="3"
+                                    class="loading"
+                                >
+                                    Loading jobs...
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+
+                    </table>
+
+
+                    <div
+                        id="jobEmptyState"
+                        class="empty-state hidden"
+                    >
+
+                        <div>
+                            💼
+                        </div>
+
+                        <p>
+                            No jobs found.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             UPCOMING INTERVIEWS
+        ================================================== -->
+
+        <section class="dashboard-card upcoming-section">
+
+
+            <div class="card-header">
+
+
+                <div>
+
+                    <h2>
+                        Upcoming Interviews
+                    </h2>
+
+                    <p>
+                        Interviews scheduled for upcoming candidates.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="interview.html"
+                    class="view-all"
+                >
+                    View All
+                </a>
+
+
+            </div>
+
+
+
+            <div class="table-container">
+
+
+                <table>
+
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Candidate
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Time
+                            </th>
+
+                            <th>
+                                Interview Type
+                            </th>
+
+                            <th>
+                                Interviewer
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="upcomingInterviews">
+
+                        <tr>
+
+                            <td
+                                colspan="6"
+                                class="loading"
+                            >
+                                Loading interviews...
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+
+                </table>
+
+
+                <div
+                    id="interviewEmptyState"
+                    class="empty-state hidden"
+                >
+
+                    <div>
+                        📅
+                    </div>
+
+                    <p>
+                        No upcoming interviews.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             QUICK ACTIONS
+        ================================================== -->
+
+        <section class="quick-actions">
+
+
+            <div class="quick-action-card">
+
+
+                <div class="quick-icon">
+                    ♙
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Manage Candidates
+                    </h3>
+
+                    <p>
+                        Add, view and manage candidates.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="candidate.html"
+                    class="quick-button"
+                >
+                    Open
+                </a>
+
+
+            </div>
+
+
+
+            <div class="quick-action-card">
+
+
+                <div class="quick-icon">
+                    💼
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Manage Jobs
+                    </h3>
+
+                    <p>
+                        Create and track job openings.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="jobs.html"
+                    class="quick-button"
+                >
+                    Open
+                </a>
+
+
+            </div>
+
+
+
+            <div class="quick-action-card">
+
+
+                <div class="quick-icon">
+                    ◷
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Schedule Interview
+                    </h3>
+
+                    <p>
+                        Schedule and manage candidate interviews.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="interview.html"
+                    class="quick-button"
+                >
+                    Open
+                </a>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =====================================================
+         TOAST
+    ====================================================== -->
+
+    <div
+        id="toast"
+        class="toast"
+    >
+
+        <span id="toastMessage"></span>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="./js/index.js"></script>
+
+
+</body>
+
+</html>
+

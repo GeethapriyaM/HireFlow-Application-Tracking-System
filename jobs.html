@@ -1,245 +1,924 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>HireFlow - Jobs</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="./css/jobs.css"
+    >
+
 </head>
+
 
 <body>
 
-    <header class="navbar">
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+
+        <!-- LOGO -->
 
         <div class="logo">
-            Hire<span>Flow</span>
-        </div>
 
-        <nav>
-            <a href="index.html">Dashboard</a>
-            <a href="jobs.html" class="active">Jobs</a>
-            <a href="applications.html">Applications</a>
-        </nav>
-
-        <div class="profile">
-            <div class="profile-icon">SK</div>
-            <span>Santhosh</span>
-        </div>
-
-    </header>
-
-
-    <main class="container">
-
-        <section class="welcome">
-
-            <div>
-                <h1>Jobs</h1>
-                <p>Manage all your job openings.</p>
+            <div class="logo-icon">
+                H
             </div>
 
-            <button class="add-job-btn" onclick="openJobForm()">
-                + Add New Job
+            <span>
+                HireFlow
+            </span>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="navigation">
+
+
+            <a
+                href="index.html"
+                class="nav-item"
+            >
+
+                <span>⌂</span>
+
+                Dashboard
+
+            </a>
+
+
+            <a
+                href="candidate.html"
+                class="nav-item"
+            >
+
+                <span>♙</span>
+
+                Candidates
+
+            </a>
+
+
+            <a
+                href="jobs.html"
+                class="nav-item active"
+            >
+
+                <span>▣</span>
+
+                Jobs
+
+            </a>
+
+
+            <a
+                href="interview.html"
+                class="nav-item"
+            >
+
+                <span>◷</span>
+
+                Interviews
+
+            </a>
+
+
+            <a
+                href="#"
+                class="nav-item"
+            >
+
+                <span>◉</span>
+
+                Reports
+
+            </a>
+
+
+        </nav>
+
+
+        <!-- SIDEBAR BOTTOM -->
+
+        <div class="sidebar-bottom">
+
+
+            <a
+                href="#"
+                class="nav-item"
+            >
+
+                <span>⚙</span>
+
+                Settings
+
+            </a>
+
+
+            <div class="profile">
+
+
+                <div class="profile-avatar">
+                    GP
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        Geetha Priya
+                    </strong>
+
+                    <small>
+                        Recruiter
+                    </small>
+
+                </div>
+
+
+                <span class="profile-more">
+                    ⋮
+                </span>
+
+
+            </div>
+
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             TOP BAR
+        ================================================== -->
+
+        <header class="topbar">
+
+
+            <div>
+
+                <h1>
+                    Jobs
+                </h1>
+
+                <p>
+                    Create, manage and track your job openings.
+                </p>
+
+            </div>
+
+
+            <button
+                class="add-btn"
+                id="openAddJob"
+                onclick="openJobForm()"
+            >
+
+                <span>
+                    +
+                </span>
+
+                Add Job
+
             </button>
+
+
+        </header>
+
+
+
+        <!-- =================================================
+             STATISTICS
+        ================================================== -->
+
+        <section class="stats-grid">
+
+
+            <!-- TOTAL JOBS -->
+
+            <div class="stat-card">
+
+
+                <div class="stat-icon total">
+                    💼
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Total Jobs
+                    </span>
+
+                    <h2 id="totalJobs">
+                        0
+                    </h2>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ACTIVE JOBS -->
+
+            <div class="stat-card">
+
+
+                <div class="stat-icon active">
+                    ✓
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Active Jobs
+                    </span>
+
+                    <h2 id="activeJobs">
+                        0
+                    </h2>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- DRAFT JOBS -->
+
+            <div class="stat-card">
+
+
+                <div class="stat-icon draft">
+                    📝
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Draft Jobs
+                    </span>
+
+                    <h2 id="draftJobs">
+                        0
+                    </h2>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- CLOSED JOBS -->
+
+            <div class="stat-card">
+
+
+                <div class="stat-icon closed">
+                    ✕
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Closed Jobs
+                    </span>
+
+                    <h2 id="closedJobs">
+                        0
+                    </h2>
+
+                </div>
+
+
+            </div>
+
 
         </section>
 
 
-        <section class="applications-section">
+
+        <!-- =================================================
+             JOB SECTION
+        ================================================== -->
+
+        <section class="job-section">
+
+
+            <!-- SECTION HEADER -->
 
             <div class="section-header">
 
+
                 <div>
-                    <h2>All Jobs</h2>
-                    <p>View and manage your available positions.</p>
+
+                    <h2>
+                        All Jobs
+                    </h2>
+
+                    <p>
+                        View and manage your available positions.
+                    </p>
+
                 </div>
+
 
             </div>
 
 
+
+            <!-- =================================================
+                 TOOLBAR
+            ================================================== -->
+
+            <div class="toolbar">
+
+
+                <!-- SEARCH -->
+
+                <div class="search-box">
+
+                    <span>
+                        ⌕
+                    </span>
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search jobs..."
+                    >
+
+                </div>
+
+
+
+                <!-- FILTERS -->
+
+                <div class="filters">
+
+
+                    <select id="statusFilter">
+
+                        <option value="All">
+                            All Status
+                        </option>
+
+                        <option value="Active">
+                            Active
+                        </option>
+
+                        <option value="Draft">
+                            Draft
+                        </option>
+
+                        <option value="Closed">
+                            Closed
+                        </option>
+
+                    </select>
+
+
+
+                    <select id="typeFilter">
+
+                        <option value="All">
+                            All Types
+                        </option>
+
+                        <option value="Full-Time">
+                            Full-Time
+                        </option>
+
+                        <option value="Part-Time">
+                            Part-Time
+                        </option>
+
+                        <option value="Internship">
+                            Internship
+                        </option>
+
+                    </select>
+
+
+
+                    <select id="sortFilter">
+
+                        <option value="newest">
+                            Newest First
+                        </option>
+
+                        <option value="oldest">
+                            Oldest First
+                        </option>
+
+                        <option value="title">
+                            Title A-Z
+                        </option>
+
+                    </select>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 JOB TABLE
+            ================================================== -->
+
             <div class="table-container">
 
+
                 <table>
+
 
                     <thead>
 
                         <tr>
-                            <th>Job Title</th>
-                            <th>Department</th>
-                            <th>Location</th>
-                            <th>Type</th>
-                            <th>Status</th>
-                            <th>Actions</th>
+
+                            <th>
+                                Job Title
+                            </th>
+
+                            <th>
+                                Department
+                            </th>
+
+                            <th>
+                                Location
+                            </th>
+
+                            <th>
+                                Type
+                            </th>
+
+                            <th>
+                                Experience
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Created
+                            </th>
+
+                            <th>
+                                Actions
+                            </th>
+
                         </tr>
 
                     </thead>
 
+
                     <tbody id="jobsTable">
 
-                        <tr>
-                            <td colspan="6" class="loading">
-                                Loading jobs...
-                            </td>
-                        </tr>
+                        <!-- Jobs will be loaded here -->
 
                     </tbody>
 
+
                 </table>
+
+
+
+                <!-- LOADING STATE -->
+
+                <div
+                    id="loadingState"
+                    class="state-message"
+                >
+
+                    <div class="loading-spinner"></div>
+
+                    <p>
+                        Loading jobs...
+                    </p>
+
+                </div>
+
+
+
+                <!-- EMPTY STATE -->
+
+                <div
+                    id="emptyState"
+                    class="state-message hidden"
+                >
+
+                    <div class="empty-icon">
+                        💼
+                    </div>
+
+                    <h3>
+                        No jobs found
+                    </h3>
+
+                    <p>
+                        Create a new job opening to get started.
+                    </p>
+
+                </div>
+
 
             </div>
 
+
         </section>
+
 
     </main>
 
 
-    <!-- Job Form -->
 
-    <div id="jobModal" class="modal">
+    <!-- =====================================================
+         ADD / EDIT JOB MODAL
+    ====================================================== -->
 
-        <div class="modal-content">
+    <div
+        class="modal-overlay hidden"
+        id="jobModal"
+    >
+
+
+        <div class="modal">
+
+
+            <!-- MODAL HEADER -->
 
             <div class="modal-header">
 
-                <h2 id="formTitle">Add New Job</h2>
+
+                <div>
+
+                    <h2 id="formTitle">
+                        Add New Job
+                    </h2>
+
+                    <p>
+                        Enter job information below.
+                    </p>
+
+                </div>
+
 
                 <button
+                    type="button"
                     class="close-btn"
-                    onclick="closeJobForm()">
+                    onclick="closeJobForm()"
+                >
+
                     ×
+
                 </button>
+
 
             </div>
 
 
+
+            <!-- JOB FORM -->
+
             <form id="jobForm">
+
 
                 <input
                     type="hidden"
-                    id="jobId">
+                    id="jobId"
+                >
 
 
-                <label>Job Title</label>
 
-                <input
-                    type="text"
-                    id="title"
-                    required>
+                <div class="form-grid">
 
 
-                <label>Department</label>
+                    <!-- JOB TITLE -->
 
-                <input
-                    type="text"
-                    id="department"
-                    required>
+                    <div class="form-group full">
 
+                        <label>
+                            Job Title
+                            <span>*</span>
+                        </label>
 
-                <label>Location</label>
+                        <input
+                            type="text"
+                            id="title"
+                            placeholder="Full Stack Developer"
+                            required
+                        >
 
-                <input
-                    type="text"
-                    id="location"
-                    required>
-
-
-                <label>Job Type</label>
-
-                <select id="type" required>
-
-                    <option value="Full-Time">
-                        Full-Time
-                    </option>
-
-                    <option value="Part-Time">
-                        Part-Time
-                    </option>
-
-                    <option value="Internship">
-                        Internship
-                    </option>
-
-                </select>
+                    </div>
 
 
-                <label>Experience Level</label>
 
-                <input
-                    type="text"
-                    id="experienceLevel"
-                    required>
+                    <!-- DEPARTMENT -->
 
+                    <div class="form-group">
 
-                <label>Salary Range</label>
+                        <label>
+                            Department
+                            <span>*</span>
+                        </label>
 
-                <input
-                    type="text"
-                    id="salaryRange"
-                    placeholder="$50,000 - $80,000"
-                    required>
+                        <input
+                            type="text"
+                            id="department"
+                            placeholder="Engineering"
+                            required
+                        >
 
-
-                <label>Description</label>
-
-                <textarea
-                    id="description"
-                    required>
-                </textarea>
+                    </div>
 
 
-                <label>Responsibilities</label>
 
-                <textarea
-                    id="responsibilities"
-                    placeholder="Separate each responsibility with a comma"
-                    required>
-                </textarea>
+                    <!-- LOCATION -->
 
+                    <div class="form-group">
 
-                <label>Skills</label>
+                        <label>
+                            Location
+                            <span>*</span>
+                        </label>
 
-                <textarea
-                    id="skills"
-                    placeholder="Node.js, MongoDB, React"
-                    required>
-                </textarea>
+                        <input
+                            type="text"
+                            id="location"
+                            placeholder="Chennai"
+                            required
+                        >
 
-
-                <label>Status</label>
-
-                <select id="status">
-
-                    <option value="Active">
-                        Active
-                    </option>
-
-                    <option value="Draft">
-                        Draft
-                    </option>
-
-                    <option value="Closed">
-                        Closed
-                    </option>
-
-                </select>
+                    </div>
 
 
-                <button
-                    type="submit"
-                    class="save-btn">
-                    Save Job
-                </button>
+
+                    <!-- JOB TYPE -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Job Type
+                            <span>*</span>
+                        </label>
+
+                        <select
+                            id="type"
+                            required
+                        >
+
+                            <option value="Full-Time">
+                                Full-Time
+                            </option>
+
+                            <option value="Part-Time">
+                                Part-Time
+                            </option>
+
+                            <option value="Internship">
+                                Internship
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- EXPERIENCE -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Experience Level
+                            <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="experienceLevel"
+                            placeholder="1-3 years"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- SALARY -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Salary Range
+                            <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="salaryRange"
+                            placeholder="₹5,00,000 - ₹8,00,000"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- STATUS -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Status
+                        </label>
+
+                        <select id="status">
+
+                            <option value="Active">
+                                Active
+                            </option>
+
+                            <option value="Draft">
+                                Draft
+                            </option>
+
+                            <option value="Closed">
+                                Closed
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- DESCRIPTION -->
+
+                    <div class="form-group full">
+
+                        <label>
+                            Description
+                            <span>*</span>
+                        </label>
+
+                        <textarea
+                            id="description"
+                            placeholder="Describe the job role..."
+                            rows="4"
+                            required
+                        ></textarea>
+
+                    </div>
+
+
+
+                    <!-- RESPONSIBILITIES -->
+
+                    <div class="form-group full">
+
+                        <label>
+                            Responsibilities
+                        </label>
+
+                        <textarea
+                            id="responsibilities"
+                            placeholder="Build APIs, develop UI, work with databases..."
+                            rows="3"
+                        ></textarea>
+
+                        <small>
+                            Separate responsibilities using commas.
+                        </small>
+
+                    </div>
+
+
+
+                    <!-- SKILLS -->
+
+                    <div class="form-group full">
+
+                        <label>
+                            Required Skills
+                        </label>
+
+                        <textarea
+                            id="skills"
+                            placeholder="JavaScript, Node.js, MongoDB, React"
+                            rows="3"
+                        ></textarea>
+
+                        <small>
+                            Separate skills using commas.
+                        </small>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- MODAL FOOTER -->
+
+                <div class="modal-footer">
+
+
+                    <button
+                        type="button"
+                        class="cancel-btn"
+                        onclick="closeJobForm()"
+                    >
+
+                        Cancel
+
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="save-btn"
+                    >
+
+                        <span id="saveBtnText">
+                            Add Job
+                        </span>
+
+                    </button>
+
+
+                </div>
+
 
             </form>
 
+
         </div>
+
 
     </div>
 
 
+
+    <!-- =====================================================
+         TOAST
+    ====================================================== -->
+
+    <div
+        id="toast"
+        class="toast"
+    >
+
+        <span id="toastMessage"></span>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
     <script src="jobs.js"></script>
 
+
 </body>
+
 </html>

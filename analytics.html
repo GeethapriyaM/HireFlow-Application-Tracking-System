@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>HireFlow - Analytics</title>
+
+    <link
+        rel="stylesheet"
+        href="/css/analytics.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+
+        <!-- LOGO -->
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                H
+            </div>
+
+            <span>
+                HireFlow
+            </span>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="navigation">
+
+
+            <a
+                href="index.html"
+                class="nav-item"
+            >
+
+                <span>⌂</span>
+
+                Dashboard
+
+            </a>
+
+
+            <a
+                href="candidate.html"
+                class="nav-item"
+            >
+
+                <span>♙</span>
+
+                Candidates
+
+            </a>
+
+
+            <a
+                href="jobs.html"
+                class="nav-item"
+            >
+
+                <span>▣</span>
+
+                Jobs
+
+            </a>
+
+
+            <a
+                href="interview.html"
+                class="nav-item"
+            >
+
+                <span>◷</span>
+
+                Interviews
+
+            </a>
+
+
+            <a
+                href="analytics.html"
+                class="nav-item active"
+            >
+
+                <span>◉</span>
+
+                Reports
+
+            </a>
+
+
+        </nav>
+
+
+        <!-- SIDEBAR BOTTOM -->
+
+        <div class="sidebar-bottom">
+
+
+            <a
+                href="#"
+                class="nav-item"
+            >
+
+                <span>⚙</span>
+
+                Settings
+
+            </a>
+
+
+            <div class="profile">
+
+
+                <div class="profile-avatar">
+                    GP
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        Geetha Priya
+                    </strong>
+
+                    <small>
+                        Recruiter
+                    </small>
+
+                </div>
+
+
+                <span class="profile-more">
+                    ⋮
+                </span>
+
+
+            </div>
+
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    Analytics
+                </h1>
+
+                <p>
+                    Overview of your recruitment performance.
+                </p>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================================
+             MAIN STATISTICS
+        ================================================== -->
+
+        <section class="stats-grid">
+
+
+            <!-- CANDIDATES -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon candidates">
+                    ♙
+                </div>
+
+                <div>
+
+                    <span>
+                        Total Candidates
+                    </span>
+
+                    <h2 id="totalCandidates">
+                        0
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- JOBS -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon jobs">
+                    💼
+                </div>
+
+                <div>
+
+                    <span>
+                        Total Jobs
+                    </span>
+
+                    <h2 id="totalJobs">
+                        0
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ACTIVE JOBS -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon active">
+                    ✓
+                </div>
+
+                <div>
+
+                    <span>
+                        Active Jobs
+                    </span>
+
+                    <h2 id="activeJobs">
+                        0
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- INTERVIEWS -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon interviews">
+                    ◷
+                </div>
+
+                <div>
+
+                    <span>
+                        Total Interviews
+                    </span>
+
+                    <h2 id="totalInterviews">
+                        0
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             ANALYTICS GRID
+        ================================================== -->
+
+        <section class="analytics-grid">
+
+
+            <!-- =================================================
+                 CANDIDATE ANALYTICS
+            ================================================== -->
+
+            <div class="dashboard-card">
+
+
+                <div class="card-header">
+
+                    <div>
+
+                        <h2>
+                            Candidate Analytics
+                        </h2>
+
+                        <p>
+                            Candidate distribution by status.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="analytics-content">
+
+
+                    <div class="analytics-row">
+
+                        <div class="analytics-label">
+
+                            <span class="status-dot interview"></span>
+
+                            Interview
+
+                        </div>
+
+                        <strong id="interviewCandidates">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="analytics-row">
+
+                        <div class="analytics-label">
+
+                            <span class="status-dot selected"></span>
+
+                            Selected
+
+                        </div>
+
+                        <strong id="selectedCandidates">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="analytics-row">
+
+                        <div class="analytics-label">
+
+                            <span class="status-dot rejected"></span>
+
+                            Rejected
+
+                        </div>
+
+                        <strong id="rejectedCandidates">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="analytics-row">
+
+                        <div class="analytics-label">
+
+                            <span class="status-dot screening"></span>
+
+                            Screening
+
+                        </div>
+
+                        <strong id="screeningCandidates">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 JOB ANALYTICS
+            ================================================== -->
+
+            <div class="dashboard-card">
+
+
+                <div class="card-header">
+
+                    <div>
+
+                        <h2>
+                            Job Analytics
+                        </h2>
+
+                        <p>
+                            Current job opening overview.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="analytics-content">
+
+
+                    <div class="analytics-row">
+
+                        <div class="analytics-label">
+
+                            <span class="status-dot active-dot"></span>
+
+                            Active Jobs
+
+                        </div>
+
+                        <strong id="analyticsActiveJobs">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="analytics-row">
+
+                        <div class="analytics-label">
+
+                            <span class="status-dot draft-dot"></span>
+
+                            Draft Jobs
+
+                        </div>
+
+                        <strong id="draftJobs">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="analytics-row">
+
+                        <div class="analytics-label">
+
+                            <span class="status-dot closed-dot"></span>
+
+                            Closed Jobs
+
+                        </div>
+
+                        <strong id="closedJobs">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="analytics-row total-row">
+
+                        <div class="analytics-label">
+
+                            Total Jobs
+
+                        </div>
+
+                        <strong id="analyticsTotalJobs">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             INTERVIEW ANALYTICS
+        ================================================== -->
+
+        <section class="dashboard-card interview-analytics">
+
+
+            <div class="card-header">
+
+                <div>
+
+                    <h2>
+                        Interview Analytics
+                    </h2>
+
+                    <p>
+                        Overview of interview progress and outcomes.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="interview.html"
+                    class="view-all"
+                >
+                    View Interviews
+                </a>
+
+            </div>
+
+
+
+            <div class="interview-grid">
+
+
+                <!-- SCHEDULED -->
+
+                <div class="interview-stat">
+
+                    <div class="interview-stat-icon scheduled-icon">
+                        ◷
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Scheduled
+                        </span>
+
+                        <strong id="scheduledInterviews">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- COMPLETED -->
+
+                <div class="interview-stat">
+
+                    <div class="interview-stat-icon completed-icon">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Completed
+                        </span>
+
+                        <strong id="completedInterviews">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- CANCELLED -->
+
+                <div class="interview-stat">
+
+                    <div class="interview-stat-icon cancelled-icon">
+                        ×
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Cancelled
+                        </span>
+
+                        <strong id="cancelledInterviews">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- RESCHEDULED -->
+
+                <div class="interview-stat">
+
+                    <div class="interview-stat-icon rescheduled-icon">
+                        ↻
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Rescheduled
+                        </span>
+
+                        <strong id="rescheduledInterviews">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             RECRUITMENT SUMMARY
+        ================================================== -->
+
+        <section class="dashboard-card summary-card">
+
+
+            <div class="card-header">
+
+                <div>
+
+                    <h2>
+                        Recruitment Summary
+                    </h2>
+
+                    <p>
+                        Overall recruitment activity in HireFlow.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-grid">
+
+
+                <div class="summary-item">
+
+                    <span>
+                        Candidates
+                    </span>
+
+                    <strong id="summaryCandidates">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <span>
+                        Jobs
+                    </span>
+
+                    <strong id="summaryJobs">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <span>
+                        Active Jobs
+                    </span>
+
+                    <strong id="summaryActiveJobs">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <span>
+                        Interviews
+                    </span>
+
+                    <strong id="summaryInterviews">
+                        0
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="./js/analytics.js"></script>
+
+
+</body>
+
+</html>
