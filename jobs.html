@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,11 +10,11 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>HireFlow - Interviews</title>
+    <title>HireFlow - Jobs</title>
 
     <link
         rel="stylesheet"
-        href="./css/interview.css"
+        href="./css/jobs.css"
     >
 
 </head>
@@ -30,6 +29,9 @@
 
     <aside class="sidebar">
 
+
+        <!-- LOGO -->
+
         <div class="logo">
 
             <div class="logo-icon">
@@ -43,14 +45,20 @@
         </div>
 
 
+        <!-- NAVIGATION -->
+
         <nav class="navigation">
+
 
             <a
                 href="index.html"
                 class="nav-item"
             >
+
                 <span>⌂</span>
+
                 Dashboard
+
             </a>
 
 
@@ -58,58 +66,80 @@
                 href="candidate.html"
                 class="nav-item"
             >
+
                 <span>♙</span>
+
                 Candidates
+
             </a>
 
 
             <a
                 href="jobs.html"
-                class="nav-item"
+                class="nav-item active"
             >
+
                 <span>▣</span>
+
                 Jobs
+
             </a>
 
 
             <a
                 href="interview.html"
-                class="nav-item active"
-            >
-                <span>◷</span>
-                Interviews
-            </a>
-
-
-            <a
-                href="analytics.html"
                 class="nav-item"
             >
-                <span>◉</span>
-                Reports
+
+                <span>◷</span>
+
+                Interviews
+
             </a>
 
-        </nav>
-
-
-        <div class="sidebar-bottom">
 
             <a
                 href="#"
                 class="nav-item"
             >
+
+                <span>◉</span>
+
+                Reports
+
+            </a>
+
+
+        </nav>
+
+
+        <!-- SIDEBAR BOTTOM -->
+
+        <div class="sidebar-bottom">
+
+
+            <a
+                href="#"
+                class="nav-item"
+            >
+
                 <span>⚙</span>
+
                 Settings
+
             </a>
 
 
             <div class="profile">
 
+
                 <div class="profile-avatar">
                     GP
                 </div>
 
+
                 <div>
+
                     <strong>
                         Geetha Priya
                     </strong>
@@ -117,15 +147,20 @@
                     <small>
                         Recruiter
                     </small>
+
                 </div>
+
 
                 <span class="profile-more">
                     ⋮
                 </span>
 
+
             </div>
 
+
         </div>
+
 
     </aside>
 
@@ -144,14 +179,15 @@
 
         <header class="topbar">
 
+
             <div>
 
                 <h1>
-                    Interviews
+                    Jobs
                 </h1>
 
                 <p>
-                    Schedule, manage and track candidate interviews.
+                    Create, manage and track your job openings.
                 </p>
 
             </div>
@@ -159,16 +195,18 @@
 
             <button
                 class="add-btn"
-                id="openScheduleInterview"
+                id="openAddJob"
+                onclick="openJobForm()"
             >
 
                 <span>
                     +
                 </span>
 
-                Schedule Interview
+                Add Job
 
             </button>
+
 
         </header>
 
@@ -181,89 +219,109 @@
         <section class="stats-grid">
 
 
+            <!-- TOTAL JOBS -->
+
             <div class="stat-card">
+
 
                 <div class="stat-icon total">
-                    ◷
+                    💼
                 </div>
+
 
                 <div>
 
                     <span>
-                        Total Interviews
+                        Total Jobs
                     </span>
 
-                    <h2 id="totalInterviews">
+                    <h2 id="totalJobs">
                         0
                     </h2>
 
                 </div>
 
-            </div>
-
-
-
-            <div class="stat-card">
-
-                <div class="stat-icon scheduled">
-                    📅
-                </div>
-
-                <div>
-
-                    <span>
-                        Scheduled
-                    </span>
-
-                    <h2 id="scheduledInterviews">
-                        0
-                    </h2>
-
-                </div>
 
             </div>
 
 
 
+            <!-- ACTIVE JOBS -->
+
             <div class="stat-card">
 
-                <div class="stat-icon completed">
+
+                <div class="stat-icon active">
                     ✓
                 </div>
 
+
                 <div>
 
                     <span>
-                        Completed
+                        Active Jobs
                     </span>
 
-                    <h2 id="completedInterviews">
+                    <h2 id="activeJobs">
                         0
                     </h2>
 
                 </div>
+
 
             </div>
 
 
 
+            <!-- DRAFT JOBS -->
+
             <div class="stat-card">
 
-                <div class="stat-icon cancelled">
-                    ✕
+
+                <div class="stat-icon draft">
+                    📝
                 </div>
+
 
                 <div>
 
                     <span>
-                        Cancelled
+                        Draft Jobs
                     </span>
 
-                    <h2 id="cancelledInterviews">
+                    <h2 id="draftJobs">
                         0
                     </h2>
 
                 </div>
+
+
+            </div>
+
+
+
+            <!-- CLOSED JOBS -->
+
+            <div class="stat-card">
+
+
+                <div class="stat-icon closed">
+                    ✕
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Closed Jobs
+                    </span>
+
+                    <h2 id="closedJobs">
+                        0
+                    </h2>
+
+                </div>
+
 
             </div>
 
@@ -273,27 +331,29 @@
 
 
         <!-- =================================================
-             INTERVIEW SECTION
+             JOB SECTION
         ================================================== -->
 
-        <section class="interview-section">
+        <section class="job-section">
 
 
             <!-- SECTION HEADER -->
 
             <div class="section-header">
 
+
                 <div>
 
                     <h2>
-                        All Interviews
+                        All Jobs
                     </h2>
 
                     <p>
-                        View and manage scheduled candidate interviews.
+                        View and manage your available positions.
                     </p>
 
                 </div>
+
 
             </div>
 
@@ -317,7 +377,7 @@
                     <input
                         type="text"
                         id="searchInput"
-                        placeholder="Search interviews..."
+                        placeholder="Search jobs..."
                     >
 
                 </div>
@@ -335,20 +395,16 @@
                             All Status
                         </option>
 
-                        <option value="Scheduled">
-                            Scheduled
+                        <option value="Active">
+                            Active
                         </option>
 
-                        <option value="Completed">
-                            Completed
+                        <option value="Draft">
+                            Draft
                         </option>
 
-                        <option value="Cancelled">
-                            Cancelled
-                        </option>
-
-                        <option value="Rescheduled">
-                            Rescheduled
+                        <option value="Closed">
+                            Closed
                         </option>
 
                     </select>
@@ -361,20 +417,16 @@
                             All Types
                         </option>
 
-                        <option value="Technical">
-                            Technical
+                        <option value="Full-Time">
+                            Full-Time
                         </option>
 
-                        <option value="HR">
-                            HR
+                        <option value="Part-Time">
+                            Part-Time
                         </option>
 
-                        <option value="Managerial">
-                            Managerial
-                        </option>
-
-                        <option value="Other">
-                            Other
+                        <option value="Internship">
+                            Internship
                         </option>
 
                     </select>
@@ -391,20 +443,22 @@
                             Oldest First
                         </option>
 
-                        <option value="date">
-                            Interview Date
+                        <option value="title">
+                            Title A-Z
                         </option>
 
                     </select>
 
+
                 </div>
+
 
             </div>
 
 
 
             <!-- =================================================
-                 TABLE
+                 JOB TABLE
             ================================================== -->
 
             <div class="table-container">
@@ -412,32 +466,37 @@
 
                 <table>
 
+
                     <thead>
 
                         <tr>
 
                             <th>
-                                Candidate
+                                Job Title
                             </th>
 
                             <th>
-                                Date
+                                Department
                             </th>
 
                             <th>
-                                Time
+                                Location
                             </th>
 
                             <th>
-                                Interview Type
+                                Type
                             </th>
 
                             <th>
-                                Interviewer
+                                Experience
                             </th>
 
                             <th>
                                 Status
+                            </th>
+
+                            <th>
+                                Created
                             </th>
 
                             <th>
@@ -449,9 +508,12 @@
                     </thead>
 
 
-                    <tbody id="interviewTableBody">
+                    <tbody id="jobsTable">
+
+                        <!-- Jobs will be loaded here -->
 
                     </tbody>
+
 
                 </table>
 
@@ -467,7 +529,7 @@
                     <div class="loading-spinner"></div>
 
                     <p>
-                        Loading interviews...
+                        Loading jobs...
                     </p>
 
                 </div>
@@ -482,21 +544,22 @@
                 >
 
                     <div class="empty-icon">
-                        📅
+                        💼
                     </div>
 
                     <h3>
-                        No interviews found
+                        No jobs found
                     </h3>
 
                     <p>
-                        Schedule an interview to get started.
+                        Create a new job opening to get started.
                     </p>
 
                 </div>
 
 
             </div>
+
 
         </section>
 
@@ -506,12 +569,12 @@
 
 
     <!-- =====================================================
-         SCHEDULE / EDIT INTERVIEW MODAL
+         ADD / EDIT JOB MODAL
     ====================================================== -->
 
     <div
         class="modal-overlay hidden"
-        id="interviewModal"
+        id="jobModal"
     >
 
 
@@ -522,14 +585,15 @@
 
             <div class="modal-header">
 
+
                 <div>
 
                     <h2 id="formTitle">
-                        Schedule Interview
+                        Add New Job
                     </h2>
 
                     <p>
-                        Enter interview information below.
+                        Enter job information below.
                     </p>
 
                 </div>
@@ -538,23 +602,26 @@
                 <button
                     type="button"
                     class="close-btn"
-                    id="closeInterviewModal"
+                    onclick="closeJobForm()"
                 >
+
                     ×
+
                 </button>
+
 
             </div>
 
 
 
-            <!-- INTERVIEW FORM -->
+            <!-- JOB FORM -->
 
-            <form id="interviewForm">
+            <form id="jobForm">
 
 
                 <input
                     type="hidden"
-                    id="interviewId"
+                    id="jobId"
                 >
 
 
@@ -562,147 +629,131 @@
                 <div class="form-grid">
 
 
-                    <!-- CANDIDATE -->
+                    <!-- JOB TITLE -->
 
                     <div class="form-group full">
 
                         <label>
-
-                            Candidate
-
-                            <span>
-                                *
-                            </span>
-
+                            Job Title
+                            <span>*</span>
                         </label>
-
-
-                        <select
-                            id="candidateId"
-                            required
-                        >
-
-                            <option value="">
-                                Select Candidate
-                            </option>
-
-                        </select>
-
-                    </div>
-
-
-
-                    <!-- DATE -->
-
-                    <div class="form-group">
-
-                        <label>
-
-                            Interview Date
-
-                            <span>
-                                *
-                            </span>
-
-                        </label>
-
-
-                        <input
-                            type="date"
-                            id="interviewDate"
-                            required
-                        >
-
-                    </div>
-
-
-
-                    <!-- TIME -->
-
-                    <div class="form-group">
-
-                        <label>
-
-                            Interview Time
-
-                            <span>
-                                *
-                            </span>
-
-                        </label>
-
-
-                        <input
-                            type="time"
-                            id="interviewTime"
-                            required
-                        >
-
-                    </div>
-
-
-
-                    <!-- INTERVIEW TYPE -->
-
-                    <div class="form-group">
-
-                        <label>
-
-                            Interview Type
-
-                            <span>
-                                *
-                            </span>
-
-                        </label>
-
-
-                        <select
-                            id="interviewType"
-                            required
-                        >
-
-                            <option value="Technical">
-                                Technical
-                            </option>
-
-                            <option value="HR">
-                                HR
-                            </option>
-
-                            <option value="Managerial">
-                                Managerial
-                            </option>
-
-                            <option value="Other">
-                                Other
-                            </option>
-
-                        </select>
-
-                    </div>
-
-
-
-                    <!-- INTERVIEWER -->
-
-                    <div class="form-group">
-
-                        <label>
-
-                            Interviewer
-
-                            <span>
-                                *
-                            </span>
-
-                        </label>
-
 
                         <input
                             type="text"
-                            id="interviewer"
-                            placeholder="Enter interviewer name"
+                            id="title"
+                            placeholder="Full Stack Developer"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- DEPARTMENT -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Department
+                            <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="department"
+                            placeholder="Engineering"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- LOCATION -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Location
+                            <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="location"
+                            placeholder="Chennai"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- JOB TYPE -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Job Type
+                            <span>*</span>
+                        </label>
+
+                        <select
+                            id="type"
+                            required
+                        >
+
+                            <option value="Full-Time">
+                                Full-Time
+                            </option>
+
+                            <option value="Part-Time">
+                                Part-Time
+                            </option>
+
+                            <option value="Internship">
+                                Internship
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- EXPERIENCE -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Experience Level
+                            <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="experienceLevel"
+                            placeholder="1-3 years"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- SALARY -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Salary Range
+                            <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="salaryRange"
+                            placeholder="₹5,00,000 - ₹8,00,000"
                             required
                         >
 
@@ -718,23 +769,18 @@
                             Status
                         </label>
 
+                        <select id="status">
 
-                        <select id="interviewStatus">
-
-                            <option value="Scheduled">
-                                Scheduled
+                            <option value="Active">
+                                Active
                             </option>
 
-                            <option value="Completed">
-                                Completed
+                            <option value="Draft">
+                                Draft
                             </option>
 
-                            <option value="Cancelled">
-                                Cancelled
-                            </option>
-
-                            <option value="Rescheduled">
-                                Rescheduled
+                            <option value="Closed">
+                                Closed
                             </option>
 
                         </select>
@@ -743,70 +789,65 @@
 
 
 
-                    <!-- SCORE -->
-
-                    <div class="form-group">
-
-                        <label>
-                            Evaluation Score
-                        </label>
-
-
-                        <input
-                            type="number"
-                            id="evaluationScore"
-                            min="0"
-                            max="100"
-                            placeholder="0 - 100"
-                        >
-
-                    </div>
-
-
-
-                    <!-- FEEDBACK -->
+                    <!-- DESCRIPTION -->
 
                     <div class="form-group full">
 
                         <label>
-                            Evaluation Feedback
+                            Description
+                            <span>*</span>
                         </label>
 
-
                         <textarea
-                            id="evaluationFeedback"
+                            id="description"
+                            placeholder="Describe the job role..."
                             rows="4"
-                            placeholder="Enter interview feedback..."
+                            required
                         ></textarea>
 
                     </div>
 
 
 
-                    <!-- DECISION -->
+                    <!-- RESPONSIBILITIES -->
 
-                    <div class="form-group">
+                    <div class="form-group full">
 
                         <label>
-                            Evaluation Decision
+                            Responsibilities
                         </label>
 
+                        <textarea
+                            id="responsibilities"
+                            placeholder="Build APIs, develop UI, work with databases..."
+                            rows="3"
+                        ></textarea>
 
-                        <select id="evaluationDecision">
+                        <small>
+                            Separate responsibilities using commas.
+                        </small>
 
-                            <option value="">
-                                Select Decision
-                            </option>
+                    </div>
 
-                            <option value="selected">
-                                Selected
-                            </option>
 
-                            <option value="rejected">
-                                Rejected
-                            </option>
 
-                        </select>
+                    <!-- SKILLS -->
+
+                    <div class="form-group full">
+
+                        <label>
+                            Required Skills
+                        </label>
+
+                        <textarea
+                            id="skills"
+                            placeholder="JavaScript, Node.js, MongoDB, React"
+                            rows="3"
+                        ></textarea>
+
+                        <small>
+                            Separate skills using commas.
+                        </small>
 
                     </div>
 
@@ -823,7 +864,7 @@
                     <button
                         type="button"
                         class="cancel-btn"
-                        id="cancelInterview"
+                        onclick="closeJobForm()"
                     >
 
                         Cancel
@@ -837,7 +878,7 @@
                     >
 
                         <span id="saveBtnText">
-                            Schedule Interview
+                            Add Job
                         </span>
 
                     </button>
@@ -851,57 +892,6 @@
 
         </div>
 
-    </div>
-
-
-
-    <!-- =====================================================
-         INTERVIEW DETAILS MODAL
-    ====================================================== -->
-
-    <div
-        class="modal-overlay hidden"
-        id="detailsModal"
-    >
-
-
-        <div class="modal details-modal">
-
-
-            <div class="modal-header">
-
-                <div>
-
-                    <h2>
-                        Interview Details
-                    </h2>
-
-                    <p>
-                        Interview schedule and evaluation information.
-                    </p>
-
-                </div>
-
-
-                <button
-                    type="button"
-                    class="close-btn"
-                    id="closeDetailsModal"
-                >
-                    ×
-                </button>
-
-            </div>
-
-
-            <div id="interviewDetails">
-
-                <!-- Details will be loaded here -->
-
-            </div>
-
-
-        </div>
 
     </div>
 
@@ -926,10 +916,9 @@
          JAVASCRIPT
     ====================================================== -->
 
-    <script src="./js/interview.js"></script>
+    <script src="jobs.js"></script>
 
 
 </body>
 
 </html>
-

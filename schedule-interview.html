@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>HireFlow - Schedule Interview</title>
+
+    <link
+        rel="stylesheet"
+        href="css/schedule-interview.css"
+    >
+
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="top-header">
+
+        <div class="brand">
+
+            <h1>HireFlow</h1>
+
+            <span>Applicant Tracking System</span>
+
+        </div>
+
+        <div class="header-badge">
+            Interview Management
+        </div>
+
+    </header>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="page-container">
+
+        <!-- Page Heading -->
+
+        <div class="page-heading">
+
+            <div>
+
+                <p class="eyebrow">
+                    INTERVIEW MANAGEMENT
+                </p>
+
+                <h2>
+                    Schedule Interview
+                </h2>
+
+                <p class="subtitle">
+                    Arrange an interview with a candidate
+                    and assign the appropriate interviewer.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= FORM CARD ================= -->
+
+        <section class="schedule-card">
+
+            <div class="card-header">
+
+                <div class="card-icon">
+                    📅
+                </div>
+
+                <div>
+
+                    <h3>
+                        Interview Details
+                    </h3>
+
+                    <p>
+                        Enter the required information
+                        to schedule the interview.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <form
+                id="scheduleInterviewForm"
+                class="schedule-form"
+            >
+
+
+                <!-- ================= CANDIDATE ================= -->
+
+                <div class="form-group full-width">
+
+                    <label for="candidate">
+                        Candidate
+                    </label>
+
+                    <select
+                        id="candidate"
+                        required
+                    >
+
+                        <option value="">
+                            Select Candidate
+                        </option>
+
+                    </select>
+
+                    <small>
+                        Select the candidate who will attend
+                        this interview.
+                    </small>
+
+                </div>
+
+
+                <!-- ================= DATE ================= -->
+
+                <div class="form-group">
+
+                    <label for="interviewDate">
+                        Interview Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="interviewDate"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- ================= TIME ================= -->
+
+                <div class="form-group">
+
+                    <label for="interviewTime">
+                        Interview Time
+                    </label>
+
+                    <input
+                        type="time"
+                        id="interviewTime"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- ================= TYPE ================= -->
+
+                <div class="form-group">
+
+                    <label for="interviewType">
+                        Interview Type
+                    </label>
+
+                    <select
+                        id="interviewType"
+                        required
+                    >
+
+                        <option value="">
+                            Select Interview Type
+                        </option>
+
+                        <option value="Technical">
+                            Technical
+                        </option>
+
+                        <option value="HR">
+                            HR
+                        </option>
+
+                        <option value="Managerial">
+                            Managerial
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- ================= INTERVIEWER ================= -->
+
+                <div class="form-group">
+
+                    <label for="interviewer">
+                        Interviewer
+                    </label>
+
+                    <input
+                        type="text"
+                        id="interviewer"
+                        placeholder="Enter interviewer name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- ================= SUMMARY ================= -->
+
+                <div class="schedule-summary">
+
+                    <div class="summary-icon">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Before scheduling
+                        </strong>
+
+                        <p>
+                            Make sure the candidate,
+                            date, time, interview type,
+                            and interviewer are correct.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= ACTIONS ================= -->
+
+                <div class="form-actions">
+
+                    <button
+                        type="button"
+                        class="secondary-button"
+                        onclick="history.back()"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        Schedule Interview
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </section>
+
+
+        <!-- ================= INFO ================= -->
+
+        <div class="info-row">
+
+            <div class="info-card">
+
+                <span class="info-icon">
+                    👤
+                </span>
+
+                <div>
+
+                    <strong>
+                        Candidate
+                    </strong>
+
+                    <p>
+                        Choose the candidate
+                        attending the interview.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <span class="info-icon">
+                    ⏰
+                </span>
+
+                <div>
+
+                    <strong>
+                        Date & Time
+                    </strong>
+
+                    <p>
+                        Select a suitable
+                        interview slot.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <span class="info-icon">
+                    💼
+                </span>
+
+                <div>
+
+                    <strong>
+                        Interview Type
+                    </strong>
+
+                    <p>
+                        Select the appropriate
+                        interview round.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script src="js/schedule-interview.js"></script>
+
+</body>
+
+</html>

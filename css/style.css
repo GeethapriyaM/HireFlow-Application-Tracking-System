@@ -93,3 +93,41 @@ tr:hover {
 div {
     margin-bottom: 15px;
 }
+
+.stage-select {
+    padding: 7px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    color: #333;
+    font-size: 13px;
+    cursor: pointer;
+    margin: 3px;
+}
+
+.stage-select:focus {
+    outline: none;
+    border-color: #1f3c88;
+}
+
+.stage-select.rejected {
+    background-color: #f8d7da;
+    color: #842029;
+    border-color: #f5c2c7;
+}
+
+.stage-select.selected {
+    background-color: #d1e7dd;
+    color: #0f5132;
+    border-color: #badbcc;
+}
+
+.stage-select.interview {
+    background-color: #fff3cd;
+    color: #664d03;
+    border-color: #ffecb5;
+}
+
+.stage-select.normal {
+    background-color: #f8f9fa;
+}
