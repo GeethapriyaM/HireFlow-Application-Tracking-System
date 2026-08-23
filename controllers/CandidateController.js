@@ -142,11 +142,124 @@ const deleteCandidate = async (req, res) => {
     });
   }
 };
+// ==========================================
+// APPLY FOR JOB
+// ==========================================
+
+const applyForJob = async (req, res) => {
+  try {
+
+    const {
+      name,
+      email,
+      phone,
+      experience,
+      skills,
+      location,
+      resume,
+      jobId
+    } = req.body;
+
+
+    // Check required fields
+    if (!name || !email || !phone || !jobId) {
+      return res.status(400).json({
+        message: "Name, email, phone and job are required"
+      });
+    }
+
+
+    // Find the job
+    const job = await Job.findById(jobId);
+
+    if (!job) {
+      return res.status(404).json({
+        message: "Job not found"
+      });
+    }
+
+
+    // Only Active jobs can receive applications
+    if (job.status !== "Active") {
+      return res.status(400).json({
+        message: "Applications are closed for this job"
+      });
+    }
+
+
+    // Check whether candidate already applied
+    const existingCandidate = await Candidate.findOne({
+      email: email.toLowerCase(),
+      jobId: job._id
+    });
+
+    if (existingCandidate) {
+      return res.status(400).json({
+        message: "You have already applied for this job"
+      });
+    }
+
+
+    // Create candidate
+    const candidate = new Candidate({
+
+      name,
+
+      email: email.toLowerCase(),
+
+      phone,
+
+      // Automatically get position from Job
+      position: job.title,
+
+      // Connect candidate with the Job
+      jobId: job._id,
+
+      experience: experience || 0,
+
+      skills: skills || [],
+
+      location: location || "",
+
+      resume: resume || "",
+
+      status: "Applied"
+
+    });
+
+
+    const savedCandidate = await candidate.save();
+
+
+    res.status(201).json({
+
+      message: "Application submitted successfully",
+
+      candidate: savedCandidate
+
+    });
+
+
+  } catch (error) {
+
+    console.error("Apply job error:", error);
+
+    res.status(500).json({
+
+      message: "Failed to apply for job",
+
+      error: error.message
+
+    });
+
+  }
+};
 
 module.exports = {
   getAllCandidates,
   getCandidateById,
   createCandidate,
   updateCandidate,
-  deleteCandidate
+  deleteCandidate,
+  applyForJob
 };

@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>HireFlow - Candidate Dashboard</title>
+
+    <link
+        rel="stylesheet"
+        href="./css/candidate-dashboard.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- ================================
+         SIDEBAR
+    ================================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                H
+            </div>
+
+            <span>
+                HireFlow
+            </span>
+
+        </div>
+
+
+        <nav class="navigation">
+
+            <a
+                href="#"
+                class="nav-item active"
+                data-section="dashboard"
+            >
+                <span>⌂</span>
+                Dashboard
+            </a>
+
+
+            <a
+                href="#"
+                class="nav-item"
+                data-section="jobs"
+            >
+                <span>▣</span>
+                Browse Jobs
+            </a>
+
+
+            <a
+                href="#"
+                class="nav-item"
+                data-section="applications"
+            >
+                <span>📄</span>
+                My Applications
+            </a>
+
+
+            <a
+                href="#"
+                class="nav-item"
+                data-section="interviews"
+            >
+                <span>◷</span>
+                My Interviews
+            </a>
+
+
+            <a
+                href="#"
+                class="nav-item"
+                data-section="profile"
+            >
+                <span>♙</span>
+                My Profile
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <button
+                id="logoutBtn"
+                class="logout-btn"
+            >
+                <span>↪</span>
+                Logout
+            </button>
+
+
+            <div class="profile">
+
+                <div
+                    class="profile-avatar"
+                    id="profileAvatar"
+                >
+                    C
+                </div>
+
+
+                <div>
+
+                    <strong id="profileName">
+                        Candidate
+                    </strong>
+
+                    <small>
+                        Candidate
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- ================================
+         MAIN CONTENT
+    ================================= -->
+
+    <main class="main-content">
+
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h1 id="pageTitle">
+                    Candidate Dashboard
+                </h1>
+
+                <p id="pageDescription">
+                    Find your next opportunity and track your applications.
+                </p>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- ================================
+             DASHBOARD SECTION
+        ================================= -->
+
+        <section
+            id="dashboardSection"
+            class="page-section active-section"
+        >
+
+            <div class="welcome-card">
+
+                <div>
+
+                    <h2>
+                        Welcome back,
+                        <span id="welcomeName">
+                            Candidate
+                        </span>! 👋
+                    </h2>
+
+                    <p>
+                        Explore opportunities and track your job applications.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- STATISTICS -->
+
+            <div class="stats-grid">
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon jobs">
+                        💼
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Available Jobs
+                        </span>
+
+                        <h2 id="availableJobsCount">
+                            0
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon applied">
+                        📄
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Applications
+                        </span>
+
+                        <h2 id="applicationCount">
+                            0
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon interview">
+                        ◷
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Interviews
+                        </span>
+
+                        <h2 id="interviewCount">
+                            0
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- RECENT JOBS -->
+
+            <div class="section-card">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>
+                            Latest Opportunities
+                        </h2>
+
+                        <p>
+                            Recently posted active jobs.
+                        </p>
+
+                    </div>
+
+                    <button
+                        class="view-button"
+                        data-section="jobs"
+                    >
+                        View All
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="dashboardJobs"
+                    class="job-grid"
+                >
+
+                    <p class="loading">
+                        Loading jobs...
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================================
+             JOBS SECTION
+        ================================= -->
+
+        <section
+            id="jobsSection"
+            class="page-section"
+        >
+
+            <div class="section-card">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>
+                            Available Jobs
+                        </h2>
+
+                        <p>
+                            Find a position that matches your skills.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="jobsContainer"
+                    class="job-grid"
+                >
+
+                    <p class="loading">
+                        Loading jobs...
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================================
+             APPLICATIONS SECTION
+        ================================= -->
+
+        <section
+            id="applicationsSection"
+            class="page-section"
+        >
+
+            <div class="section-card">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>
+                            My Applications
+                        </h2>
+
+                        <p>
+                            Track the jobs you have applied for.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="applicationsContainer"
+                    class="applications-container"
+                >
+
+                    <p class="loading">
+                        Loading applications...
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================================
+             INTERVIEWS SECTION
+        ================================= -->
+
+        <section
+            id="interviewsSection"
+            class="page-section"
+        >
+
+            <div class="section-card">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>
+                            My Interviews
+                        </h2>
+
+                        <p>
+                            View your scheduled interviews.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="interviewsContainer"
+                    class="applications-container"
+                >
+
+                    <div class="empty-state">
+
+                        <div>
+                            ◷
+                        </div>
+
+                        <h3>
+                            No interviews yet
+                        </h3>
+
+                        <p>
+                            Your scheduled interviews will appear here.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================================
+             PROFILE SECTION
+        ================================= -->
+
+        <section
+            id="profileSection"
+            class="page-section"
+        >
+
+            <div class="section-card profile-card">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>
+                            My Profile
+                        </h2>
+
+                        <p>
+                            Your HireFlow account information.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-details">
+
+                    <div class="profile-large-avatar">
+                        <span id="profileLargeAvatar">
+                            C
+                        </span>
+                    </div>
+
+
+                    <div class="profile-info">
+
+                        <div>
+
+                            <span>
+                                Name
+                            </span>
+
+                            <strong id="profileDetailsName">
+                                -
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Email
+                            </span>
+
+                            <strong id="profileEmail">
+                                -
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Role
+                            </span>
+
+                            <strong>
+                                Candidate
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- ================================
+         APPLY MODAL
+    ================================= -->
+
+    <div
+        id="applyModal"
+        class="modal-overlay hidden"
+    >
+
+        <div class="modal">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h2>
+                        Apply for Job
+                    </h2>
+
+                    <p id="applyJobTitle">
+                        Job
+                    </p>
+
+                </div>
+
+
+                <button
+                    id="closeApplyModal"
+                    class="close-btn"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <form id="applicationForm">
+
+                <input
+                    type="hidden"
+                    id="applicationJobId"
+                >
+
+
+                <label for="coverLetter">
+                    Cover Letter
+                </label>
+
+
+                <textarea
+                    id="coverLetter"
+                    rows="7"
+                    placeholder="Write a short cover letter..."
+                ></textarea>
+
+
+                <div class="modal-actions">
+
+                    <button
+                        type="button"
+                        id="cancelApply"
+                        class="cancel-btn"
+                    >
+                        Cancel
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="apply-submit-btn"
+                    >
+                        Submit Application
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- TOAST -->
+
+    <div
+        id="toast"
+        class="toast"
+    >
+        <span id="toastMessage"></span>
+    </div>
+
+
+    <script src="./js/candidate-dashboard.js"></script>
+
+</body>
+
+</html>
