@@ -262,4 +262,4 @@ module.exports = {
   updateCandidate,
   deleteCandidate,
   applyForJob
-};
+};  
